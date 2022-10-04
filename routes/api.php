@@ -21,19 +21,6 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::resource('/events', \App\Http\Controllers\EventsController::class);
-    Route::resource('/contests', \App\Http\Controllers\ContestController::class);
-    Route::resource('/criterias', \App\Http\Controllers\CriteriaController::class);
-    Route::resource('/judges', \App\Http\Controllers\JudgesController::class);
-    Route::resource('/contestants', \App\Http\Controllers\ContestantsController::class);
-    Route::resource('/scores', \App\Http\Controllers\ScoreController::class);
-    Route::put('/update-scores', [\App\Http\Controllers\ScoreController::class, 'updateScores']);
-
-    Route::get('/contest-by-event', [\App\Http\Controllers\ContestController::class, 'getByEvent']);
-    Route::get('/score-by-judge-contestant', [\App\Http\Controllers\ScoreController::class, 'getByJudgeAndContestant']);
-    Route::get('/score-by-judge', [\App\Http\Controllers\ScoreController::class, 'getByJudge']);
-    Route::get('/contestants-by-judge', [\App\Http\Controllers\ContestantsController::class, 'getByJudge']);
-    Route::get('/finalresult', [\App\Http\Controllers\ScoreController::class, 'getFinalResult']);
 });
 
 

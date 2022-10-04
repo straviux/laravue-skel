@@ -7,6 +7,14 @@ import mdiVue from 'mdi-vue/v3'
 import * as mdijs from '@mdi/js'
 import moment from "moment";
 
+import Admin from "./backend";
+
+import { registerModules } from "./register-modules";
+
+registerModules({
+  admin: Admin,
+});
+
 const app = createApp(App);
 app
 .use(store)
