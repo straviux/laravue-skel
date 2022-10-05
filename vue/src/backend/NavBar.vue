@@ -38,7 +38,7 @@
       </div>
     </div>
 
-    <div class="col-span-12 p-10" v-if="menuIsActive">
+    <div class="col-span-12 p-6" v-if="menuIsActive">
       <nav-bar-menu />
     </div>
   </div>
