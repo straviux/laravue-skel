@@ -43,6 +43,21 @@
           </label>
         </div>
       </div>
+      <div class="flex gap-3 ml-4">
+        <div class="form-control ml-2 pl-2 border-l border-gray-300">
+          <label class="label cursor-pointer space-x-1">
+            <span class="label-text text-xs">Show</span>
+            <select class="select select-bordered select-xs">
+              <option>5</option>
+              <option>10</option>
+              <option>20</option>
+              <option>50</option>
+              <option>100</option>
+            </select>
+            <span class="label-text text-xs">entries</span>
+          </label>
+        </div>
+      </div>
     </form>
   </div>
   <div>
@@ -56,14 +71,68 @@
           edit
         </button>
       </template>
+
+      <template v-slot:pagination>
+        <div class="flex justify-center mt-5 pb-5">
+          <nav
+            class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px"
+            aria-label="Pagination"
+          >
+            <a
+              v-for="(link, i) of links"
+              :key="i"
+              :disabled="!link.url"
+              href="#"
+              @click="getForPage($event, link, i + 1)"
+              aria-current="page"
+              class="relative inline-flex items-center px-4 py-2 border text-xs font-medium whitespace-nowrap hover:bg-slate-400 hover:border-slate-400 hover:text-slate-50"
+              :class="[
+                link.active
+                  ? 'z-10 bg-slate-400 border-slate-400 text-slate-50'
+                  : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
+                i === 0
+                  ? 'rounded-l-md bg-gray-100 hover:bg-gray-100 hover:border-gray-300 hover:text-gray-500'
+                  : '',
+                i === links.length - 1 ? 'rounded-r-md' : '',
+              ]"
+              v-html="link.label"
+            >
+            </a>
+          </nav>
+        </div>
+      </template>
     </custom-table>
   </div>
 </template>
 <script setup>
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import CustomTable from "../CustomTable.vue";
 
 const router = useRouter();
+
+const links = ref([
+  {
+    url: null,
+    label: "&laquo; Previous",
+    active: false,
+  },
+  {
+    url: "#",
+    label: 1,
+    active: true,
+  },
+  {
+    url: "#test",
+    label: 2,
+    active: false,
+  },
+  {
+    url: null,
+    label: "Next &raquo;",
+    active: false,
+  },
+]);
 const filters = ["all", "active", "inactive"];
 const headers = [
   {
@@ -128,10 +197,19 @@ const rows = [
     status: "active",
   },
 ];
-
+// const totalPage = ref(0);
+// const itemsPerPage = ref(2);
 const update = (data) => {
   console.log(data);
   router.push({ name: "UpdateNews", params: { id: data.id } });
+};
+
+const getForPage = (ev, link, page) => {
+  ev.preventDefault();
+  if (!link.url || link.active) {
+    return;
+  }
+  console.log(link);
 };
 </script>
 <style scoped></style>
