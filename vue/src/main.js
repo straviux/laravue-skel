@@ -6,6 +6,7 @@ import './index.css'
 import mdiVue from 'mdi-vue/v3'
 import * as mdijs from '@mdi/js'
 import moment from "moment";
+import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 
 import Admin from "./backend";
 
@@ -22,6 +23,7 @@ app
 .use(mdiVue, {
   icons: mdijs
 })
+.use(autoAnimatePlugin)
 .mount('#app');
 
 app.config.globalProperties.$filters = {

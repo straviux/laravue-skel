@@ -1,5 +1,11 @@
 <template>
-  <h1>test</h1>
+  <div>
+    <news-menu class="shadow-xs rounded" />
+
+    <router-view></router-view>
+  </div>
 </template>
-<script setup></script>
+<script setup>
+import NewsMenu from "./news/NewsMenu.vue";
+</script>
 <style scoped></style>

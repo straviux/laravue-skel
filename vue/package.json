@@ -9,16 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^1.0.0-beta.3",
     "@headlessui/vue": "^1.6.7",
     "@heroicons/vue": "^2.0.10",
     "@mdi/js": "^7.0.96",
     "@vuepic/vue-datepicker": "^3.4.8",
     "@vueup/vue-quill": "^1.0.0-beta.10",
-    "uuid": "^8.3.2",
     "axios": "^0.27.2",
     "daisyui": "^2.24.0",
     "mdi-vue": "^3.0.13",
     "moment": "^2.29.4",
+    "uuid": "^8.3.2",
     "vue": "^3.2.37",
     "vue-router": "^4.0.13",
     "vuex": "^4.0.2"
