@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-10 p-7">
+  <div class="flex flex-col gap-6 p-7">
     <hello-bar></hello-bar>
     <router-view></router-view>
   </div>

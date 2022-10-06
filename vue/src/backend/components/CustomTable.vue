@@ -30,8 +30,8 @@
           <th></th>
         </tr>
       </thead>
+      <!-- body -->
       <tbody>
-        <!-- row 1 -->
         <tr v-for="(data, index) in rows" :key="index">
           <td class="text-[11px] text-slate-400">{{ index + 1 }}</td>
           <td
@@ -44,8 +44,8 @@
           <td><slot name="actionButtons" :rowData="data" /></td>
         </tr>
       </tbody>
-      <!-- foot -->
     </table>
+    <slot name="pagination" />
   </div>
 </template>
 <script setup>

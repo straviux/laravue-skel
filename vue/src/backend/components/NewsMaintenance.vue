@@ -1,6 +1,6 @@
 <template>
   <div>
-    <news-menu class="shadow-xs rounded" />
+    <news-menu class="shadow rounded-lg" />
 
     <router-view></router-view>
   </div>
