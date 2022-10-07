@@ -1,6 +1,6 @@
 <template>
-  <div class="overflow-x-auto w-full shadow rounded-lg">
-    <table class="table w-full">
+  <div class="overflow-x-auto w-full">
+    <table class="table w-full shadow rounded-lg">
       <!-- head -->
       <thead>
         <tr>

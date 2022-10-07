@@ -1,7 +1,9 @@
 <template>
   <div class="flex flex-col md:flex-row gap-10 justify-between items-center">
     <div>
-      <h1 class="font-extrabold text-4xl text-blueGray-700">System Title</h1>
+      <h1 class="font-extrabold text-4xl text-blueGray-700 drop-shadow-lg">
+        System Title
+      </h1>
       <p>{{ getDateTime() }}</p>
     </div>
     <div class="flex justify-between gap-2 items-center">
@@ -16,10 +18,10 @@
       <div class="flex justify-center items-center">
         <button
           @click="logout"
-          class="text-sm px-2 text-red-500 underline rounded-full flex gap-1"
+          class="text-sm px-2 text-red-500 underline rounded-full flex gap-1 drop-shadow-lg"
         >
           <mdicon name="logout-variant" width="15px" />
-          <span class="font-bold">Log out</span>
+          <span class="font-bold drop-shadow-lg">Log out</span>
         </button>
       </div>
     </div>

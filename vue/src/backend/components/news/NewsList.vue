@@ -21,7 +21,10 @@
       <div class="flex gap-3 items-center ml-4">
         <div class="form-control" v-for="f in filters">
           <label class="label cursor-pointer space-x-1">
-            <span class="label-text text-xs">{{ f }}</span>
+            <span
+              class="label-text text-xs text-white drop-shadow-lg uppercase"
+              >{{ f }}</span
+            >
             <input
               type="radio"
               name="status"
@@ -33,7 +36,9 @@
         </div>
         <div class="form-control ml-2 pl-2 border-l border-gray-300">
           <label class="label cursor-pointer space-x-1">
-            <span class="label-text text-xs">Featured</span>
+            <span class="label-text text-xs text-white uppercase drop-shadow-lg"
+              >Featured</span
+            >
             <input
               type="checkbox"
               class="checkbox checkbox-sm dark:orange-600"
@@ -46,7 +51,9 @@
       <div class="flex gap-3 ml-4">
         <div class="form-control ml-2 pl-2 border-l border-gray-300">
           <label class="label cursor-pointer space-x-1">
-            <span class="label-text text-xs">Show</span>
+            <span class="label-text text-white text-xs drop-shadow-lg"
+              >Show</span
+            >
             <select class="select select-bordered select-xs">
               <option>5</option>
               <option>10</option>
@@ -54,7 +61,9 @@
               <option>50</option>
               <option>100</option>
             </select>
-            <span class="label-text text-xs">entries</span>
+            <span class="label-text text-xs text-white drop-shadow-lg"
+              >entries</span
+            >
           </label>
         </div>
       </div>
@@ -75,7 +84,7 @@
       <template v-slot:pagination>
         <div class="flex justify-center mt-5 pb-5">
           <nav
-            class="relative z-0 inline-flex justify-center rounded-md shadow-sm -space-x-px"
+            class="relative z-0 inline-flex items-center justify-center rounded-md shadow-sm -space-x-px"
             aria-label="Pagination"
           >
             <a
@@ -114,7 +123,7 @@ const router = useRouter();
 const links = ref([
   {
     url: null,
-    label: "&laquo; Previous",
+    label: "Previous",
     active: false,
   },
   {
@@ -129,7 +138,7 @@ const links = ref([
   },
   {
     url: null,
-    label: "Next &raquo;",
+    label: "Next",
     active: false,
   },
 ]);

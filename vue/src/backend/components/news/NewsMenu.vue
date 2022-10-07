@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar mb-10 p-6">
+  <div class="navbar mb-10 p-6 bg-white">
     <div class="navbar-start">
       <!-- <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
@@ -69,7 +69,7 @@
     <div class="navbar-end">
       <router-link
         :to="{ name: 'WriteNews' }"
-        class="btn btn-sm gap-2 btn-primary text-white shadow-lg"
+        class="btn btn-sm gap-2 btn-outline"
         ><mdicon name="newspaper-plus" /> Write News</router-link
       >
     </div>
