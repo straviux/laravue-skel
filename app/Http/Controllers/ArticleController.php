@@ -83,6 +83,6 @@ class ArticleController extends Controller
         }
 
         $article->delete();
-        return response('', 204)
+        return response('', 204);
     }
 }
