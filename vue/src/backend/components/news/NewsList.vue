@@ -13,7 +13,7 @@
         <input
           type="search"
           name="q"
-          class="w-[300px] py-2 text-sm bg-gray-200 rounded-md pl-10 focus:outline-none focus:bg-white"
+          class="w-[300px] py-2 bg-gray-200 rounded-md pl-10 focus:outline-none focus:bg-white text-[15px]"
           placeholder="Search for headline or author"
           autocomplete="off"
         />
@@ -21,10 +21,14 @@
       <div class="flex gap-3 items-center ml-4">
         <div class="form-control" v-for="f in filters">
           <label class="label cursor-pointer space-x-1">
+<<<<<<< Updated upstream
             <span
               class="label-text text-xs text-white drop-shadow-lg uppercase"
               >{{ f }}</span
             >
+=======
+            <span class="label-text text-[15px]">{{ f }}</span>
+>>>>>>> Stashed changes
             <input
               type="radio"
               name="status"
@@ -34,11 +38,17 @@
             />
           </label>
         </div>
-        <div class="form-control ml-2 pl-2 border-l border-gray-300">
+      </div>
+      <div class="flex gap-3 border-l">
+        <div class="form-control ml-2 pl-2">
           <label class="label cursor-pointer space-x-1">
+<<<<<<< Updated upstream
             <span class="label-text text-xs text-white uppercase drop-shadow-lg"
               >Featured</span
             >
+=======
+            <span class="label-text text-[15px]">featured</span>
+>>>>>>> Stashed changes
             <input
               type="checkbox"
               class="checkbox checkbox-sm dark:orange-600"
@@ -48,12 +58,16 @@
           </label>
         </div>
       </div>
-      <div class="flex gap-3 ml-4">
-        <div class="form-control ml-2 pl-2 border-l border-gray-300">
+      <div class="flex gap-3 border-l">
+        <div class="form-control ml-2 pl-2 border-gray-300">
           <label class="label cursor-pointer space-x-1">
+<<<<<<< Updated upstream
             <span class="label-text text-white text-xs drop-shadow-lg"
               >Show</span
             >
+=======
+            <span class="label-text text-[15px]">Show</span>
+>>>>>>> Stashed changes
             <select class="select select-bordered select-xs">
               <option>5</option>
               <option>10</option>
@@ -61,9 +75,13 @@
               <option>50</option>
               <option>100</option>
             </select>
+<<<<<<< Updated upstream
             <span class="label-text text-xs text-white drop-shadow-lg"
               >entries</span
             >
+=======
+            <span class="label-text text-[15px]">entries</span>
+>>>>>>> Stashed changes
           </label>
         </div>
       </div>
@@ -150,6 +168,7 @@ const headers = [
     sortDirection: "ascending",
     rowClass:
       "text-[16px] text-slate-600 max-w-[240px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
+    headerClass: "text-[20px]",
   },
   {
     key: "author",
@@ -159,7 +178,7 @@ const headers = [
   },
   {
     key: "date_publish",
-    label: `date publish <p class="text-[10px] italic">(yyyy-mm-dd)</p>`,
+    label: `date publish <p class="text-[11px] italic">(yyyy-mm-dd)</p>`,
     sortDirection: "ascending",
     rowClass: "text-[14px] text-slate-600",
   },

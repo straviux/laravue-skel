@@ -6,6 +6,7 @@ import childRoutes from "./components/news/news-routes";
 const routes = {
   path: "/admin",
   redirect: { name: 'Dashboard' },
+  meta: { requiresAuth: true },
   component: Module, // Default Layout
   children: [
     {

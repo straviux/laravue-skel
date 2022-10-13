@@ -4,7 +4,7 @@
       <!-- head -->
       <thead>
         <tr>
-          <th class="w-1 text-gray-600">#</th>
+          <th class="w-1 text-gray-600 align-top">#</th>
           <th
             v-for="(header, index) in model.headers"
             :key="index + header.key"
@@ -15,7 +15,10 @@
                 sortData({ key: header.key, direction: header.sortDirection })
               "
             >
-              <p v-html="header.label" class="text-gray-500"></p>
+              <p
+                v-html="header.label"
+                class="text-gray-500 text-[16px] font-semibold"
+              ></p>
               <mdicon
                 :name="
                   header.sortDirection == 'ascending'
