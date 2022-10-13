@@ -14,6 +14,14 @@ const store = createStore(
       loading: false,
       data: {}
       },
+      newsList: {
+        loading: false,
+        data: []
+      },
+      currentNews: {
+        loading: false,
+        data: {}
+      },
 
       notification: {
         show: false,
@@ -52,9 +60,68 @@ const store = createStore(
             return response;
           })
       },
+
+      getNewsList({commit}) {
+        commit("setCurrentNewsLoading", true);
+        return axiosClient
+        .get(`/news/`)
+        .then((res)=>{
+          commit("setNews",res.data);
+          commit("setNewsLoading", false);
+          console.log(res.data)
+          return res;
+        })
+        .catch((err)=>{
+          commit("setNewsLoading", false);
+          throw err;
+        })
+      },
+      getNews({commit}, id) {
+        commit("setCurrentNewsLoading", true);
+        return axiosClient
+        .get(`/news/${id}`)
+        .then((res)=>{
+          commit("setCurrentNews",res.data);
+          commit("setCurrentNewsLoading", false);
+          console.log(res.data)
+          return res;
+        })
+        .catch((err)=>{
+          commit("setCurrentNewsLoading", false);
+          throw err;
+        })
+      },
+      saveNews({commit},news){
+        delete news.cover_photo_url;
+        let response;
+        if(news.id) {
+          response = axiosClient.put(`/news/${news.id}`, news)
+          .then((res)=>{
+            commit("setCurrentNews", res.data);
+            return res;
+          })
+        } else {
+          response = axiosClient.post("/news", news).then((res)=>{
+            commit("setCurrentNews", res.data);
+            return res;
+          })
+        }
+        return response;
+      },
     },
     mutations: {
-
+      setNewsLoading: (state, loading) => {
+        state.newsList.loading = loading;
+      },
+      setNews: (state, news)=>{
+        state.newsList.data = news.data;
+      },
+      setCurrentNewsLoading: (state, loading) => {
+        state.currentNews.loading = loading;
+      },
+      setCurrentNews: (state, news)=>{
+        state.currentNews.data = news.data;
+      },
       logout: (state) => {
         state.user.token = null;
         state.user.data = {};
