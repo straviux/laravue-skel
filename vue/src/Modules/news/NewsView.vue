@@ -11,17 +11,17 @@
       </div>
     </div>
   </header>
-  <div class="flex flex-col gap-6 p-7 relative">
+  <div class="flex flex-col mx-auto gap-6 relative bg-image">
     <div
-      class="absolute bg-gradient-to-b from-blue-300 to-green-300 opacity-75 inset-0 z-0"
+      class="absolute bg-gradient-to-b from-blue-200 to-green-400 opacity-75 inset-0 z-0"
     ></div>
-    <div class="flex-row my-6 space-x-4 space-y-6 bg-white z-20 rounded p-10">
-      <div class="space-y-8 w-[70%]">
-        <div class="flex justify-between items-center">
-          <h2 class="text-3xl text-gray-600 font-bold">
+    <div class="flex my-6 lg:space-x-10 z-20 max-w-7xl mx-auto">
+      <div class="space-y-8 lg:w-[70%] bg-white p-10 rounded">
+        <div class="flex justify-between border-b pb-4">
+          <h2 class="text-3xl text-gray-600 font-bold w-[80%]">
             {{ currentNews.headline }}
           </h2>
-          <p class="italic font-semibold text-xl text-gray-500">
+          <p class="italic font-semibold text-lg text-gray-500">
             {{ $filters.moment(currentNews.posted_at, "LL") }}
           </p>
         </div>
@@ -31,22 +31,42 @@
         <br />
         <span v-html="currentNews.content" class="prose text-xl"></span>
       </div>
+
+      <div class="lg:w-[30%] px-10 space-y-6">
+        <div class="p-10 bg-white rounded"></div>
+        <div class="p-10 bg-white rounded"></div>
+      </div>
     </div>
   </div>
 </template>
 <script setup>
 import store from "../../store";
 import { computed } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
+const router = useRouter();
 
 // console.log(route.params.slug);
 const currentNews = computed(() => store.state.currentNews.data);
-store.dispatch("getNewsBySlug", route.params.slug);
+store
+  .dispatch("getNewsBySlug", route.params.slug)
+  .then(({ data }) => {
+    // add loader stop control here
+  })
+  .catch((err) => {
+    // redirect to not found
+
+    router.push({ name: "NotFound" });
+  });
 </script>
 <style scoped>
-.content {
-  all: revert;
+.bg-image {
+  background: url("../../assets/img/minimalist-bg.png") no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 </style>

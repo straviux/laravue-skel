@@ -72,6 +72,15 @@
           <mdicon name="text-box-edit" />
           edit
         </button>
+
+        <router-link
+          :to="{ name: 'ViewNews', params: { slug: data.rowData.slug } }"
+          class="text-blue-500 underline gap-1 btn btn-link btn-xs text-[12px]"
+          target="_blank"
+        >
+          <mdicon name="eye" />
+          view public
+        </router-link>
       </template>
 
       <template v-slot:pagination>
@@ -143,16 +152,16 @@ const headers = [
     label: `headline`,
     sortDirection: "ascending",
     rowClass:
-      "text-[16px] text-slate-600 max-w-[250px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
+      "text-[16px] text-slate-600 max-w-[350px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
     headerClass: "text-[20px]",
   },
-  {
-    key: "slug",
-    label: "Link",
-    sortDirection: "ascending",
-    rowClass:
-      "text-[14px] text-slate-600 italic max-w-[200px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
-  },
+  // {
+  //   key: "slug",
+  //   label: "Link",
+  //   sortDirection: "ascending",
+  //   rowClass:
+  //     "text-[14px] text-slate-600 italic max-w-[200px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
+  // },
   {
     key: "posted_at",
     label: `date publish <p class="text-[11px] italic">(yyyy-mm-dd)</p>`,

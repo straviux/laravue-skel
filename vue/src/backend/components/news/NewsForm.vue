@@ -1,8 +1,8 @@
 <template>
-  <div class="mt-5 md:col-span-2 md:mt-0">
+  <div class="mt-5 md:col-span-2 md:mt-0 max-w-7xl mx-auto">
     <form @submit.prevent="saveNews">
       <div class="shadow sm:overflow-hidden sm:rounded-md">
-        <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+        <div class="space-y-10 bg-white sm:p-6">
           <div class="flex justify-between">
             <h1 class="text-xl uppercase mb-2">
               {{ model.id ? model.headline : "Write a news article" }}
@@ -15,9 +15,7 @@
           </div>
           <!-- <pre>{{ model }}</pre> -->
           <div>
-            <label class="block text-sm font-medium text-gray-700"
-              >Cover photo</label
-            >
+            <label class="block font-medium text-gray-700">Cover photo</label>
             <div
               class="mt-2 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6"
             >
@@ -46,9 +44,7 @@
                   object-cover
                   class="mb-8"
                 />
-                <div
-                  class="flex text-sm items-center justify-center text-gray-600"
-                >
+                <div class="flex items-center justify-center text-gray-600">
                   <label
                     for="file-upload"
                     class="relative cursor-pointer rounded bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500 px-3"
@@ -69,9 +65,7 @@
           </div>
           <div class="grid grid-cols-3 gap-6">
             <div class="col-span-12">
-              <label
-                for="headline"
-                class="block text-sm font-medium text-gray-700"
+              <label for="headline" class="block font-medium text-gray-700"
                 >Headline</label
               >
               <div class="mt-4 flex shadow-sm">
@@ -87,7 +81,7 @@
           </div>
 
           <div>
-            <label for="excerpt" class="block text-sm font-medium text-gray-700"
+            <label for="excerpt" class="block font-medium text-gray-700"
               >Excerpt</label
             >
             <div class="mt-2">
@@ -100,14 +94,14 @@
                 placeholder="Type something here"
               />
             </div>
-            <p class="mt-2 text-sm text-gray-500">
+            <p class="mt-2 text-gray-500">
               Brief information about this news. Will be displayed as subheading
               on news list.
             </p>
           </div>
 
           <div>
-            <label for="content" class="block text-sm font-medium text-gray-700"
+            <label for="content" class="block font-medium text-gray-700"
               >Content</label
             >
             <div class="mt-2">
@@ -116,7 +110,6 @@
                 contentType="html"
                 theme="snow"
                 toolbar="essential"
-                class="h-48"
                 ref="quill"
               />
             </div>
@@ -183,6 +176,7 @@ let model = ref({
   cover_photo_url: "",
   article_type_id: 1, // 1-news  2-blog  3-article
 });
+let action = "created";
 
 //watch current news from store
 watch(
@@ -190,7 +184,6 @@ watch(
   (newVal, oldVal) => {
     model.value = {
       ...JSON.parse(JSON.stringify(newVal)),
-      status: newVal.status !== "draft",
     };
     quill.value.setHTML(newVal.content);
   }
@@ -198,12 +191,24 @@ watch(
 
 if (route.params.id) {
   store.dispatch("getNews", route.params.id);
+  action = "updated";
 }
 
 const saveNews = () => {
-  store.dispatch("saveNews", model.value).then(({ data }) => {
-    console.log(data);
-  });
+  store
+    .dispatch("saveNews", model.value)
+    .then(({ data }) => {
+      store.commit("notify", {
+        type: "success",
+        message: "Data was successfully " + action,
+      });
+    })
+    .catch((err) => {
+      store.commit("notify", {
+        type: "error",
+        message: "Something went wrong, please try again or contact your admin",
+      });
+    });
 };
 const onImageChange = (ev) => {
   const file = ev.target.files[0];

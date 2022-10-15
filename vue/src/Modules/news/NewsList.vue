@@ -10,9 +10,7 @@
     </div>
   </header>
   <main>
-    <div class="mx-auto py-4 sm:px-6 lg:px-8">
-      <!-- Replace with your content -->
-
+    <div class="mx-auto max-w-7xl py-4 sm:px-6 lg:px-8">
       <div class="px-4 sm:px-0">
         <div class="max-w-7xl py-6 sm:px-6 lg:px-8">
           <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
@@ -40,66 +38,59 @@
                       {{ data.rowData.excerpt }}
                     </p>
                     <div class="card-actions lg:justify-end pt-8 tags py-3">
-                      <div class="badge badge-xs badge-ghost py-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="2 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          class="w-4 h-4"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"
-                          />
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M6 6h.008v.008H6V6z"
-                          />
-                        </svg>
-
+                      <div class="badge badge-ghost py-3">
+                        <mdicon
+                          name="tag-heart-outline"
+                          size="18"
+                          class="mr-1"
+                        />
                         Provincial News
                       </div>
-                      <div class="badge badge-ghost py-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="2 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          class="w-4 h-4"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
+                      <div class="badge badge-ghost py-3">
+                        <mdicon name="calendar" size="18" class="mr-1" />
                         {{ $filters.moment(data.rowData.posted_at, "ll") }}
                       </div>
-                      <div class="badge badge-xs badge-ghost py-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="2 0 24 24"
-                          stroke-width="1.5"
-                          stroke="currentColor"
-                          class="w-4 h-4"
-                        >
-                          <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
+                      <div class="badge badge-ghost py-3">
+                        <mdicon
+                          name="comment-account-outline"
+                          size="18"
+                          class="mr-1"
+                        />
                         Arcee Heredero
                       </div>
                     </div>
                   </div>
                 </router-link>
+              </template>
+
+              <template v-slot:pagination>
+                <div class="flex justify-center mt-5 pb-5">
+                  <nav
+                    class="relative z-0 inline-flex items-center justify-center rounded-md shadow-sm -space-x-px"
+                    aria-label="Pagination"
+                  >
+                    <a
+                      v-for="(link, i) of links"
+                      :key="i"
+                      :disabled="!link.url"
+                      href="#"
+                      @click="getForPage($event, link, i + 1)"
+                      aria-current="page"
+                      class="relative inline-flex items-center px-4 py-2 border text-xs font-medium whitespace-nowrap hover:bg-slate-400 hover:border-slate-400 hover:text-slate-50"
+                      :class="[
+                        link.active
+                          ? 'z-10 bg-slate-400 border-slate-400 text-slate-50'
+                          : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
+                        i === 0
+                          ? 'rounded-l-md bg-gray-100 hover:bg-gray-100 hover:border-gray-300 hover:text-gray-500'
+                          : '',
+                        i === links.length - 1 ? 'rounded-r-md' : '',
+                      ]"
+                      v-html="link.label"
+                    >
+                    </a>
+                  </nav>
+                </div>
               </template>
             </custom-list>
           </div>
@@ -112,12 +103,32 @@
 
 <script setup>
 import store from "../../store";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import CustomList from "../CustomList.vue";
 store.dispatch("getPublicNewsList");
 
+const links = ref([
+  {
+    url: null,
+    label: "Previous",
+    active: false,
+  },
+  {
+    url: null,
+    label: "Next",
+    active: false,
+  },
+]);
+
 const newslist = computed(() => store.state.newsList.data);
-console.log(newslist);
+
+const getForPage = (ev, link, page) => {
+  ev.preventDefault();
+  if (!link.url || link.active) {
+    return;
+  }
+  console.log(link);
+};
 </script>
 
 <style scoped>

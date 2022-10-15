@@ -109,7 +109,7 @@ const store = createStore(
         return response;
       },
 
-      getPublicNewsList({commit}) {
+      getPublicNewsList({commit},{url = null} = {}) {
         commit("setCurrentNewsLoading", true);
         return axiosClient
         .get(`/news-list/`)
@@ -165,6 +165,14 @@ const store = createStore(
         state.user.token = token;
         localStorage.setItem('TOKEN', token);
       },
+      notify: (state, {message, type}) => {
+      state.notification.show = true;
+      state.notification.type = type;
+      state.notification.message = message;
+      setTimeout(() => {
+        state.notification.show = false;
+      }, 3000)
+    },
     },
     modules: {}
   }

@@ -5,6 +5,8 @@
     <div v-for="(data, index) in rows" :key="index">
       <slot name="list" :rowData="data" />
     </div>
+
+    <slot name="pagination" />
   </div>
 </template>
 <script setup>
