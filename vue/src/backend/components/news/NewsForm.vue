@@ -98,7 +98,6 @@
                 rows="3"
                 class="input block w-full flex-1 h-20 rounded-sm p-2 border-gray-300 focus:border-transparent focus:ring-none sm:text-sm"
                 placeholder="Type something here"
-                @input="assignValToSlug"
               />
             </div>
             <p class="mt-2 text-sm text-gray-500">
@@ -177,24 +176,25 @@ let model = ref({
   headline: "",
   excerpt: "",
   content: "",
-  slug: "",
   status: false,
   featured: false,
+  slug: "",
   cover_photo: "",
   cover_photo_url: "",
+  article_type_id: 1, // 1-news  2-blog  3-article
 });
 
 //watch current news from store
-// watch(
-//   () => store.state.currentNews.data,
-//   (newVal, oldVal) => {
-//     model.value = {
-//       ...JSON.parse(JSON.stringify(newVal)),
-//       status: newVal.status !== "draft",
-//     };
-//     quill.value.setHTML(newVal.content);
-//   }
-// );
+watch(
+  () => store.state.currentNews.data,
+  (newVal, oldVal) => {
+    model.value = {
+      ...JSON.parse(JSON.stringify(newVal)),
+      status: newVal.status !== "draft",
+    };
+    quill.value.setHTML(newVal.content);
+  }
+);
 
 if (route.params.id) {
   store.dispatch("getNews", route.params.id);
@@ -214,7 +214,7 @@ const onImageChange = (ev) => {
   };
   reader.readAsDataURL(file);
 };
-const assignValToSlug = () => {
-  model.value.slug = model.value.excerpt;
-};
+// const assignValToSlug = () => {
+//   model.value.slug = model.value.excerpt;
+// };
 </script>

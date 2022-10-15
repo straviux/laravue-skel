@@ -38,7 +38,7 @@ class StoreArticleRequest extends FormRequest
             'status' => 'required|boolean',
             'featured' => 'required|boolean',
             'excerpt' => 'required|string|max:1000',
-            'slug' => 'required|string|max:1000',
+            // 'slug' => 'required|string|max:1000',
             'content' => 'required|string',
             'posted_at' => 'nullable|date',
         ];

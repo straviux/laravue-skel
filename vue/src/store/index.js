@@ -64,7 +64,7 @@ const store = createStore(
       getNewsList({commit}) {
         commit("setCurrentNewsLoading", true);
         return axiosClient
-        .get(`/news/`)
+        .get(`/articles/`)
         .then((res)=>{
           commit("setNews",res.data);
           commit("setNewsLoading", false);
@@ -79,7 +79,7 @@ const store = createStore(
       getNews({commit}, id) {
         commit("setCurrentNewsLoading", true);
         return axiosClient
-        .get(`/news/${id}`)
+        .get(`/articles/${id}`)
         .then((res)=>{
           commit("setCurrentNews",res.data);
           commit("setCurrentNewsLoading", false);
@@ -95,13 +95,13 @@ const store = createStore(
         delete news.cover_photo_url;
         let response;
         if(news.id) {
-          response = axiosClient.put(`/news/${news.id}`, news)
+          response = axiosClient.put(`/articles/${news.id}`, news)
           .then((res)=>{
             commit("setCurrentNews", res.data);
             return res;
           })
         } else {
-          response = axiosClient.post("/news", news).then((res)=>{
+          response = axiosClient.post("/articles", news).then((res)=>{
             commit("setCurrentNews", res.data);
             return res;
           })

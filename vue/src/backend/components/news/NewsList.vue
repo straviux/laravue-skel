@@ -63,7 +63,7 @@
     </form>
   </div>
   <div>
-    <custom-table :headers="headers" :rows="rows">
+    <custom-table :headers="headers" :rows="newslist">
       <template v-slot:actionButtons="data">
         <button
           @click="update(data.rowData)"
@@ -139,21 +139,22 @@ const links = ref([
 const filters = ["all", "active", "inactive"];
 const headers = [
   {
-    key: "title",
-    label: `title`,
+    key: "headline",
+    label: `headline`,
     sortDirection: "ascending",
     rowClass:
-      "text-[16px] text-slate-600 max-w-[240px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
+      "text-[16px] text-slate-600 max-w-[250px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
     headerClass: "text-[20px]",
   },
   {
-    key: "author",
-    label: "author",
+    key: "slug",
+    label: "Link",
     sortDirection: "ascending",
-    rowClass: "text-[14px] text-slate-600 italic",
+    rowClass:
+      "text-[14px] text-slate-600 italic max-w-[200px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
   },
   {
-    key: "date_publish",
+    key: "posted_at",
     label: `date publish <p class="text-[11px] italic">(yyyy-mm-dd)</p>`,
     sortDirection: "ascending",
     rowClass: "text-[14px] text-slate-600",
@@ -165,6 +166,7 @@ const headers = [
     sortDirection: "ascending",
   },
 ];
+const newslist = computed(() => store.state.newsList.data);
 const rows = [
   {
     id: 1,

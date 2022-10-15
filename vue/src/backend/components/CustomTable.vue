@@ -42,7 +42,13 @@
             :key="index + header.key"
             :class="header.rowClass || ''"
           >
-            {{ data[header.key] }}
+            {{
+              header.key === "status"
+                ? data[header.key]
+                  ? "active"
+                  : "inactive"
+                : data[header.key]
+            }}
           </td>
           <td><slot name="actionButtons" :rowData="data" /></td>
         </tr>
