@@ -25,6 +25,20 @@ class ArticleController extends Controller
         return ArticleResource::collection(Article::where('user_id', $user->id)->paginate());
     }
 
+
+    public function showForPublic(Article $article)
+    {
+        if (!$article->status) {
+            return response("", 404);
+        }
+        return new ArticleResource($article);
+    }
+
+    public function showPublicNewsList()
+    {
+        return ArticleResource::collection(Article::where('status', 1)->where('article_type_id', 1)->orderBy('created_at', 'DESC')->paginate(10));
+    }
+
     /**
      * Store a newly created resource in storage.
      *

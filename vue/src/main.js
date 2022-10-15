@@ -9,11 +9,13 @@ import moment from "moment";
 import { autoAnimatePlugin } from '@formkit/auto-animate/vue'
 
 import Admin from "./backend";
+import Public from "./Modules";
 
 import { registerModules } from "./register-modules";
 
 registerModules({
   admin: Admin,
+  public: Public
 });
 
 const app = createApp(App);

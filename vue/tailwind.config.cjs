@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
         backgroundImage: {
-        'footer': "url('src/assets/img/footer_bg.gif')",
+        'footer': "url('./src/assets/img/footer_bg.gif')",
         },
         colors: {
             ...colors,

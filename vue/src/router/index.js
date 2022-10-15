@@ -11,9 +11,8 @@ const routes = [
   // Public links
   // {
   //   path: '/',
-  //   redirect: '/admin/dashboard',
-  //   meta: { requiresAuth: true },
-  //   name:  'Admin',
+  //   meta: {isGuest: true},
+  //   name:  'Default',
   //   component: DefaultLayout,
   //   children: [
   //     {path: '/admin/dashboard', name: 'Dashboard', component: Dashboard},

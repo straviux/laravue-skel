@@ -108,6 +108,37 @@ const store = createStore(
         }
         return response;
       },
+
+      getPublicNewsList({commit}) {
+        commit("setCurrentNewsLoading", true);
+        return axiosClient
+        .get(`/news-list/`)
+        .then((res)=>{
+          commit("setNews",res.data);
+          commit("setNewsLoading", false);
+          console.log(res.data)
+          return res;
+        })
+        .catch((err)=>{
+          commit("setNewsLoading", false);
+          throw err;
+        })
+      },
+      getNewsBySlug({commit}, slug) {
+        commit("setCurrentNewsLoading", true);
+        return axiosClient
+        .get(`/news-by-slug/${slug}`)
+        .then((res)=>{
+          commit("setCurrentNews",res.data);
+          commit("setCurrentNewsLoading", false);
+          console.log(res.data)
+          return res;
+        })
+        .catch((err)=>{
+          commit("setCurrentNewsLoading", false);
+          throw err;
+        })
+      },
     },
     mutations: {
       setNewsLoading: (state, loading) => {
