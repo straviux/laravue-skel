@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::get('/news-by-slug/{article:slug}', [App\Http\Controllers\ArticleController::class, 'showForPublic']);
 Route::get('/news-list/', [App\Http\Controllers\ArticleController::class, 'showPublicNewsList']);
+Route::get('/featured-news-list/', [App\Http\Controllers\ArticleController::class, 'showFeaturedNewsList']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);

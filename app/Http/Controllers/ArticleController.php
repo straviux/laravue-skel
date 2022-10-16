@@ -36,7 +36,12 @@ class ArticleController extends Controller
 
     public function showPublicNewsList()
     {
-        return ArticleResource::collection(Article::where('status', 1)->where('article_type_id', 1)->orderBy('created_at', 'DESC')->paginate(10));
+        return ArticleResource::collection(Article::where('status', 1)->where('featured', 0)->where('article_type_id', 1)->orderBy('created_at', 'DESC')->paginate(5));
+    }
+
+    public function showFeaturedNewsList()
+    {
+        return ArticleResource::collection(Article::where('status', 1)->where('featured', 1)->where('article_type_id', 1)->orderBy('created_at', 'DESC')->paginate(5));
     }
 
     /**

@@ -16,6 +16,12 @@ const store = createStore(
       },
       newsList: {
         loading: false,
+        links: [],
+        data: []
+      },
+      featuredNewsList: {
+        loading: false,
+        links: [],
         data: []
       },
       currentNews: {
@@ -76,6 +82,9 @@ const store = createStore(
           throw err;
         })
       },
+
+
+
       getNews({commit}, id) {
         commit("setCurrentNewsLoading", true);
         return axiosClient
@@ -110,9 +119,10 @@ const store = createStore(
       },
 
       getPublicNewsList({commit},{url = null} = {}) {
-        commit("setCurrentNewsLoading", true);
+        commit("setNewsLoading", true);
+        url = url || '/news-list/'
         return axiosClient
-        .get(`/news-list/`)
+        .get(url)
         .then((res)=>{
           commit("setNews",res.data);
           commit("setNewsLoading", false);
@@ -124,6 +134,24 @@ const store = createStore(
           throw err;
         })
       },
+
+      getFeaturedNewsList({commit},{url = null} = {}) {
+        commit("setFeaturedNewsLoading", true);
+        url = url || '/featured-news-list/'
+        return axiosClient
+        .get(url)
+        .then((res)=>{
+          commit("setFeaturedNews",res.data);
+          commit("setFeaturedNewsLoading", false);
+          console.log(res.data)
+          return res;
+        })
+        .catch((err)=>{
+          commit("setFeaturedNewsLoading", false);
+          throw err;
+        })
+      },
+
       getNewsBySlug({commit}, slug) {
         commit("setCurrentNewsLoading", true);
         return axiosClient
@@ -141,11 +169,19 @@ const store = createStore(
       },
     },
     mutations: {
+      setFeaturedNewsLoading: (state, loading) => {
+        state.featuredNewsList.loading = loading;
+      },
+      setFeaturedNews: (state, news)=>{
+        state.featuredNewsList.data = news.data;
+        state.featuredNewsList.links = news.meta.links;
+      },
       setNewsLoading: (state, loading) => {
         state.newsList.loading = loading;
       },
       setNews: (state, news)=>{
         state.newsList.data = news.data;
+        state.newsList.links = news.meta.links;
       },
       setCurrentNewsLoading: (state, loading) => {
         state.currentNews.loading = loading;

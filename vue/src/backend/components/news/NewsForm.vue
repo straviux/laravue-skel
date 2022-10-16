@@ -1,6 +1,10 @@
 <template>
   <div class="mt-5 md:col-span-2 md:mt-0 max-w-7xl mx-auto">
-    <form @submit.prevent="saveNews">
+    <form
+      @submit.prevent="saveNews"
+      class="animate-fade-in-down animation"
+      :style="{ animationDelay: '0.5s' }"
+    >
       <div class="shadow sm:overflow-hidden sm:rounded-md">
         <div class="space-y-10 bg-white sm:p-6">
           <div class="flex justify-between">

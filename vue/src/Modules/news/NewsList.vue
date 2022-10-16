@@ -14,7 +14,7 @@
       <div class="px-4 sm:px-0">
         <div class="max-w-7xl py-6 sm:px-6 lg:px-8">
           <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
-            <custom-list :rows="newslist">
+            <custom-list :rows="newslist.data">
               <template v-slot:list="data">
                 <router-link
                   :to="{
@@ -70,7 +70,7 @@
                     aria-label="Pagination"
                   >
                     <a
-                      v-for="(link, i) of links"
+                      v-for="(link, i) of newslist.links"
                       :key="i"
                       :disabled="!link.url"
                       href="#"
@@ -84,7 +84,7 @@
                         i === 0
                           ? 'rounded-l-md bg-gray-100 hover:bg-gray-100 hover:border-gray-300 hover:text-gray-500'
                           : '',
-                        i === links.length - 1 ? 'rounded-r-md' : '',
+                        i === newslist.links.length - 1 ? 'rounded-r-md' : '',
                       ]"
                       v-html="link.label"
                     >
@@ -97,6 +97,8 @@
         </div>
       </div>
       <!-- /End replace -->
+
+      <!-- <pre>{{ newsLinks }}</pre> -->
     </div>
   </main>
 </template>
@@ -107,27 +109,14 @@ import { computed, ref } from "vue";
 import CustomList from "../CustomList.vue";
 store.dispatch("getPublicNewsList");
 
-const links = ref([
-  {
-    url: null,
-    label: "Previous",
-    active: false,
-  },
-  {
-    url: null,
-    label: "Next",
-    active: false,
-  },
-]);
-
-const newslist = computed(() => store.state.newsList.data);
+const newslist = computed(() => store.state.newsList);
 
 const getForPage = (ev, link, page) => {
   ev.preventDefault();
   if (!link.url || link.active) {
     return;
   }
-  console.log(link);
+  store.dispatch("getPublicNewsList", { url: link.url });
 };
 </script>
 

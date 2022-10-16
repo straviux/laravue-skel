@@ -1,8 +1,11 @@
 <template>
-  <div
-    class="col-span-2 h-fit font-bold tracking-tight bg-white rounded border border-gray-200 shadow-md px-4 py-3"
-  >
-    <div v-for="(data, index) in rows" :key="index">
+  <div class="col-span-2 h-fit">
+    <div
+      v-for="(data, index) in rows"
+      :key="index"
+      class="opacity-0 animate-fade-in-down"
+      :style="{ animationDelay: `${index * 0.2}s` }"
+    >
       <slot name="list" :rowData="data" />
     </div>
 

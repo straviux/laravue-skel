@@ -35,7 +35,18 @@
       </thead>
       <!-- body -->
       <tbody>
-        <tr v-for="(data, index) in rows" :key="index">
+        <tr v-if="!rows.length">
+          <td :colspan="model.headers.length + 2" class="text-center">
+            Loading data...
+          </td>
+        </tr>
+        <tr
+          v-else
+          v-for="(data, index) in rows"
+          :key="index"
+          class="animate-fade-in-down animation"
+          :style="{ animationDelay: `${index * 0.075}s` }"
+        >
           <td class="text-[11px] text-slate-400">{{ index + 1 }}</td>
           <td
             v-for="header in headers"

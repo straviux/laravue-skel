@@ -16,7 +16,8 @@
       class="absolute bg-gradient-to-b from-blue-200 to-green-400 opacity-75 inset-0 z-0"
     ></div>
     <div class="flex my-6 lg:space-x-10 z-20 max-w-7xl mx-auto">
-      <div class="space-y-8 lg:w-[70%] bg-white p-10 rounded">
+      <div v-if="currentNewsLoading"></div>
+      <div v-else class="space-y-8 lg:w-[70%] bg-white p-10 rounded">
         <div class="flex justify-between border-b pb-4">
           <h2 class="text-3xl text-gray-600 font-bold w-[80%]">
             {{ currentNews.headline }}
@@ -43,12 +44,12 @@
 import store from "../../store";
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
-
 const route = useRoute();
 const router = useRouter();
 
 // console.log(route.params.slug);
 const currentNews = computed(() => store.state.currentNews.data);
+const currentNewsLoading = computed(() => store.state.currentNews.loading);
 store
   .dispatch("getNewsBySlug", route.params.slug)
   .then(({ data }) => {
