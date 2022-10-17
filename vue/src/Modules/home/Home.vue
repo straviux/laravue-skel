@@ -56,7 +56,11 @@
         <section
           class="col-span-2 h-fit font-bold tracking-tight bg-white rounded border border-gray-200 shadow-md px-4 py-3"
         >
-          <h5 class="drop-shadow-lg text-2xl border-b">Latest News</h5>
+          <h5
+            class="mb-2 text-2xl font-bold tracking-tight text-gray-800 dark:text-white border-b py-2 mb-4 drop-shadow-lg border-b"
+          >
+            Latest News
+          </h5>
           <custom-list :rows="newslist.data">
             <template v-slot:list="data">
               <router-link
@@ -82,20 +86,8 @@
                   </p>
                   <div class="card-actions lg:justify-end pt-8 tags py-3">
                     <div class="badge badge-ghost py-3">
-                      <mdicon name="tag-heart-outline" size="18" class="mr-1" />
-                      Provincial News
-                    </div>
-                    <div class="badge badge-ghost py-3">
                       <mdicon name="calendar" size="18" class="mr-1" />
                       {{ $filters.moment(data.rowData.posted_at, "ll") }}
-                    </div>
-                    <div class="badge badge-ghost py-3">
-                      <mdicon
-                        name="comment-account-outline"
-                        size="18"
-                        class="mr-1"
-                      />
-                      Arcee Heredero
                     </div>
                   </div>
                 </div>
@@ -113,7 +105,9 @@
                     :key="i"
                     :disabled="!link.url"
                     href="#"
-                    @click="getForPage($event, link, i + 1)"
+                    @click="
+                      getForPage($event, link, i + 1, 'getPublicNewsList')
+                    "
                     aria-current="page"
                     class="relative inline-flex items-center px-4 py-2 border text-xs font-medium whitespace-nowrap hover:bg-slate-400 hover:border-slate-400 hover:text-slate-50"
                     :class="[
@@ -143,7 +137,7 @@
             Featured
           </h5>
 
-          <custom-list :rows="newslist.data">
+          <custom-list :rows="featuredNewsList.data">
             <template v-slot:list="data">
               <router-link
                 :to="{
@@ -152,6 +146,13 @@
                 }"
                 class="card card-compact hover:bg-blue-100 rounded-none border-b py-3"
               >
+                <figure class="bg-slate-500">
+                  <img
+                    class="w-60"
+                    :src="data.rowData.cover_photo_url"
+                    :alt="data.rowData.slug"
+                  />
+                </figure>
                 <div class="card-body">
                   <h5 class="mb-2 md:text-xl text-gray-700">
                     {{ data.rowData.headline }}
@@ -170,11 +171,13 @@
                   aria-label="Pagination"
                 >
                   <a
-                    v-for="(link, i) of newslist.links"
+                    v-for="(link, i) of featuredNewsList.links"
                     :key="i"
                     :disabled="!link.url"
                     href="#"
-                    @click="getForPage($event, link, i + 1)"
+                    @click="
+                      getForPage($event, link, i + 1, 'getFeaturedNewsList')
+                    "
                     aria-current="page"
                     class="relative inline-flex items-center px-4 py-2 border text-xs font-medium whitespace-nowrap hover:bg-slate-400 hover:border-slate-400 hover:text-slate-50"
                     :class="[
@@ -216,15 +219,15 @@ const getImageUrl = (name) => {
 };
 
 store.dispatch("getFeaturedNewsList");
-
-const newslist = computed(() => store.state.featuredNewsList);
-
-const getForPage = (ev, link, page) => {
+store.dispatch("getPublicNewsList");
+const featuredNewsList = computed(() => store.state.featuredNewsList);
+const newslist = computed(() => store.state.newsList);
+const getForPage = (ev, link, page, api) => {
   ev.preventDefault();
   if (!link.url || link.active) {
     return;
   }
-  store.dispatch("getFeaturedNewsList", { url: link.url });
+  store.dispatch(api, { url: link.url });
 };
 </script>
 

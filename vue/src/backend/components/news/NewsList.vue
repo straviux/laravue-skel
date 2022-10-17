@@ -63,7 +63,7 @@
     </form>
   </div>
   <div>
-    <custom-table :headers="headers" :rows="newslist">
+    <custom-table :headers="headers" :rows="newslist.data">
       <template v-slot:actionButtons="data">
         <button
           @click="update(data.rowData)"
@@ -90,7 +90,7 @@
             aria-label="Pagination"
           >
             <a
-              v-for="(link, i) of links"
+              v-for="(link, i) of newslist.links"
               :key="i"
               :disabled="!link.url"
               href="#"
@@ -104,7 +104,7 @@
                 i === 0
                   ? 'rounded-l-md bg-gray-100 hover:bg-gray-100 hover:border-gray-300 hover:text-gray-500'
                   : '',
-                i === links.length - 1 ? 'rounded-r-md' : '',
+                i === newslist.links.length - 1 ? 'rounded-r-md' : '',
               ]"
               v-html="link.label"
             >
@@ -175,43 +175,8 @@ const headers = [
     sortDirection: "ascending",
   },
 ];
-const newslist = computed(() => store.state.newsList.data);
-const rows = [
-  {
-    id: 1,
-    title:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    excerpt: "consectetur adipiscing elit",
-    author: "[ Lexi Lore ]",
-    date_publish: "2022-10-06",
-    status: "active",
-  },
-  {
-    id: 2,
-    title: "The Quick Brown Fox",
-    excerpt: "jumps over the lazy dog",
-    author: "[ Johnny Sins ]",
-    date_publish: "2022-10-05",
-    status: "active",
-  },
-  {
-    id: 3,
-    title: "Excepteur sint occaecat cupidatat non proident",
-    excerpt: "sunt in culpa qui officia deserunt mollit anim id est laborum",
-    date_publish: "2022-10-02",
-    author: "[ Mia Khalifa ]",
-    status: "active",
-  },
-  {
-    id: 4,
-    title: "Sed ut perspiciatis unde omnis",
-    excerpt:
-      "iste natus error sit voluptatem accusantium doloremque laudantium",
-    author: "[ Maria Ozawa ]",
-    date_publish: "2022-09-30",
-    status: "active",
-  },
-];
+const newslist = computed(() => store.state.newsList);
+
 // const totalPage = ref(0);
 // const itemsPerPage = ref(2);
 const update = (data) => {
@@ -224,8 +189,8 @@ const getForPage = (ev, link, page) => {
   if (!link.url || link.active) {
     return;
   }
-  console.log(link);
+  store.dispatch("getNewsList", { url: link.url });
 };
-store.dispatch("getNewsList");
+store.dispatch("getNewsList", {});
 </script>
 <style scoped></style>

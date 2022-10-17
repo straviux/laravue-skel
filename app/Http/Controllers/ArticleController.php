@@ -20,9 +20,17 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         //
-        $user = $request->user();
+        // $user = $request->user();
+        // $status = $request['status'];
+        // $featured = $request['featured'];
+        // $numrows = $request['numrows'] ? $request['numrows'] : 5;
 
-        return ArticleResource::collection(Article::where('user_id', $user->id)->paginate());
+        // if (empty($status) && empty($featured)) {
+        //     return ArticleResource::collection(Article::paginate($numrows));
+        // } else {
+        //     return ArticleResource::collection(Article::paginate($numrows));
+        // }
+        return ArticleResource::collection(Article::where('article_type_id', 1)->orderBy('created_at', 'DESC')->paginate(5));
     }
 
 
