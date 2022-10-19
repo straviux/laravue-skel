@@ -1,5 +1,7 @@
 <template>
-  <div class="flex my-6 space-x-4 items-center justify-start">
+  <div
+    class="flex my-6 space-x-4 items-center justify-start border p-2 rounded-lg bg-white"
+  >
     <form method="GET" class="flex gap-3">
       <div class="relative text-gray-600 focus-within:text-gray-400">
         <span class="absolute inset-y-0 left-0 flex items-center pl-2">
@@ -60,6 +62,16 @@
           </label>
         </div>
       </div>
+      <div class="flex gap-3">
+        <div
+          class="form-control ml-2 pl-2 border-gray-300 align-items-center justify-center"
+        >
+          <button class="btn btn-sm gap-2">
+            <mdicon name="filter-multiple-outline" />
+            Filter
+          </button>
+        </div>
+      </div>
     </form>
   </div>
   <div>
@@ -116,35 +128,13 @@
   </div>
 </template>
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
 import store from "../../../store";
 import CustomTable from "../CustomTable.vue";
 
 const router = useRouter();
 
-const links = ref([
-  {
-    url: null,
-    label: "Previous",
-    active: false,
-  },
-  {
-    url: "#",
-    label: 1,
-    active: true,
-  },
-  {
-    url: "#test",
-    label: 2,
-    active: false,
-  },
-  {
-    url: null,
-    label: "Next",
-    active: false,
-  },
-]);
 const filters = ["all", "active", "inactive"];
 const headers = [
   {
@@ -164,7 +154,7 @@ const headers = [
   // },
   {
     key: "posted_at",
-    label: `date publish <p class="text-[11px] italic">(yyyy-mm-dd)</p>`,
+    label: "date publish",
     sortDirection: "ascending",
     rowClass: "text-[14px] text-slate-600",
   },

@@ -85,7 +85,9 @@
                     {{ data.rowData.excerpt }}
                   </p>
                   <div class="card-actions lg:justify-end pt-8 tags py-3">
-                    <div class="badge badge-ghost py-3">
+                    <div
+                      class="badge badge-ghost py-3 text-gray-500 font-semibold"
+                    >
                       <mdicon name="calendar" size="18" class="mr-1" />
                       {{ $filters.moment(data.rowData.posted_at, "ll") }}
                     </div>

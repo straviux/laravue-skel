@@ -26,7 +26,7 @@ class ArticleResource extends JsonResource
             'featured' => !!$this->featured,
             'created_at' => (new \DateTime($this->created_at))->format('Y-m-d H:i:s'),
             'updated_at' => (new \DateTime($this->updated_at))->format('Y-m-d H:i:s'),
-            'posted_at' => (new \DateTime($this->expire_date))->format('Y-m-d H:i:s'),
+            'posted_at' => (new \DateTime($this->posted_at))->format('Y-m-d H:i:s'),
             'tags' => []
         ];
     }

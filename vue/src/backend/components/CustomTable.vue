@@ -20,6 +20,7 @@
                 class="text-gray-500 text-[16px] font-semibold"
               ></p>
               <mdicon
+                v-if="header.label !== 'status'"
                 :name="
                   header.sortDirection == 'ascending'
                     ? 'sort-ascending'
@@ -53,13 +54,15 @@
             :key="index + header.key"
             :class="header.rowClass || ''"
           >
-            {{
-              header.key === "status"
-                ? data[header.key]
-                  ? "active"
-                  : "inactive"
-                : data[header.key]
-            }}
+            <span
+              v-if="header.key === 'status'"
+              :class="data[header.key] ? 'text-emerald-500' : 'text-red-500'"
+              class="font-semibold"
+              >{{ data[header.key] ? "active" : "inactive" }}</span
+            >
+            <span v-else>
+              {{ isDate(data[header.key]) || data[header.key] }}</span
+            >
           </td>
           <td><slot name="actionButtons" :rowData="data" /></td>
         </tr>
@@ -70,6 +73,7 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import moment from "moment";
 const props = defineProps({
   headers: Array,
   rows: Array,
@@ -97,7 +101,62 @@ const sortData = ({ key = "", direction = "" }) => {
       break;
     }
   }
-  console.log(model.value);
-  // add sorting functionality here
+  // console.log(key);
+  if (key === "headline") {
+    if (direction === "descending") {
+      props.rows.sort((a, b) => {
+        let fa = a.headline.toLowerCase(),
+          fb = b.headline.toLowerCase();
+
+        if (fa < fb) {
+          return -1;
+        }
+        if (fa > fb) {
+          return 1;
+        }
+        return 0;
+      });
+    } else if (direction === "ascending") {
+      props.rows.reverse((a, b) => {
+        let fa = a.headline.toLowerCase(),
+          fb = b.headline.toLowerCase();
+
+        if (fa < fb) {
+          return -1;
+        }
+        if (fa > fb) {
+          return 1;
+        }
+        return 0;
+      });
+    }
+  }
+
+  if (key === "posted_at") {
+    if (direction === "descending") {
+      props.rows.sort((a, b) => {
+        let da = new Date(a.posted_at),
+          db = new Date(b.posted_at);
+
+        console.log(da);
+        return da - db;
+      });
+    }
+
+    if (direction === "ascending") {
+      props.rows.reverse((a, b) => {
+        let da = new Date(a.posted_at),
+          db = new Date(b.posted_at);
+        return da - db;
+      });
+    }
+  }
+};
+
+const isDate = (d) => {
+  if (moment(d, true).isValid()) {
+    return moment(d).format("LL");
+  }
+  // return d instanceof Date;
 };
 </script>

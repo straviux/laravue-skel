@@ -346,17 +346,13 @@ import {
   PopoverPanel,
 } from "@headlessui/vue";
 import {
-  ArrowPathIcon,
   Bars3Icon,
-  BookmarkSquareIcon,
   CalendarIcon,
   ChartBarIcon,
   CursorArrowRaysIcon,
   LifebuoyIcon,
-  PhoneIcon,
-  PlayIcon,
   ShieldCheckIcon,
-  Squares2X2Icon,
+  PhoneIcon,
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
 import { ChevronDownIcon } from "@heroicons/vue/20/solid";
@@ -382,13 +378,6 @@ const solutions = [
 ];
 
 const resources = [
-  {
-    name: "Guides",
-    description:
-      "Learn how to maximize our platform to get the most out of it.",
-    href: "#",
-    icon: BookmarkSquareIcon,
-  },
   {
     name: "Events",
     description: "See what events we might be planning near you.",
@@ -419,17 +408,13 @@ export default {
     PopoverButton,
     PopoverGroup,
     PopoverPanel,
-    ArrowPathIcon,
     Bars3Icon,
-    BookmarkSquareIcon,
     CalendarIcon,
     ChartBarIcon,
     CursorArrowRaysIcon,
     LifebuoyIcon,
     PhoneIcon,
-    PlayIcon,
     ShieldCheckIcon,
-    Squares2X2Icon,
     XMarkIcon,
     ChevronDownIcon,
   },

@@ -68,6 +68,7 @@
     </div>
     <div class="navbar-end">
       <router-link
+        v-if="route.path.name == 'WriteNews' || route.path.name == 'UpdateNews'"
         :to="{ name: 'WriteNews' }"
         class="btn btn-sm gap-2 btn-outline"
         ><mdicon name="newspaper-plus" /> Write News</router-link

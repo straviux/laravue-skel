@@ -38,26 +38,28 @@
                       {{ data.rowData.excerpt }}
                     </p>
                     <div class="card-actions lg:justify-end pt-8 tags py-3">
-                      <div class="badge badge-ghost py-3">
+                      <!-- <div class="badge badge-ghost py-3">
                         <mdicon
                           name="tag-heart-outline"
                           size="18"
                           class="mr-1"
                         />
                         Provincial News
-                      </div>
-                      <div class="badge badge-ghost py-3">
+                      </div> -->
+                      <div
+                        class="badge badge-ghost py-3 text-gray-500 font-semibold"
+                      >
                         <mdicon name="calendar" size="18" class="mr-1" />
                         {{ $filters.moment(data.rowData.posted_at, "ll") }}
                       </div>
-                      <div class="badge badge-ghost py-3">
+                      <!-- <div class="badge badge-ghost py-3">
                         <mdicon
                           name="comment-account-outline"
                           size="18"
                           class="mr-1"
                         />
                         Arcee Heredero
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </router-link>
