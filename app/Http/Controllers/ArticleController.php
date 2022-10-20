@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\ArticleView;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Http\Resources\ArticleResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ArticleController extends Controller
 {
@@ -38,7 +41,15 @@ class ArticleController extends Controller
     {
         if (!$article->status) {
             return response("", 404);
+        } else {
+            ArticleView::where('article_id', $article->id)->first()->update([
+                'view_count' => DB::raw('view_count+1'),
+                'updated_at' => Carbon::now()
+            ]);
         }
+
+        // $article_view_counter = ArticleViewCounter();
+
         return new ArticleResource($article);
     }
 
@@ -69,6 +80,7 @@ class ArticleController extends Controller
         }
 
         $article = Article::create($data);
+        ArticleView::create(['article_id' => $article->id, 'view_count' => 0]);
 
         return new ArticleResource($article);
     }
