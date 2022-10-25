@@ -292,21 +292,22 @@
     </transition>
   </Popover>
   <router-view></router-view>
-  <footer class="p-4 md:px-6 md:py-8 bg-footer">
+  <footer class="p-4 md:px-6 md:py-8">
+    <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
     <div class="sm:flex sm:items-center sm:justify-between">
       <a href="#" class="flex items-center mb-4 sm:mb-0">
         <img
-          src="../assets/img/hor_logo.gif"
+          src="../assets/img/logo_colored.gif"
           class="mr-3 h-16"
           alt="House of Representative Logo"
         />
         <img
-          src="../assets/img/province_logo.gif"
+          src="../assets/img/province_logo_colored.gif"
           class="mr-3 h-16"
           alt="House of Representative Logo"
         />
         <img
-          src="../assets/img/jpm_logo.gif"
+          src="../assets/img/jpm logo colored.gif"
           class="mr-3 h-16"
           alt="House of Representative Logo"
         />
@@ -322,7 +323,7 @@
         </li>
       </ul>
     </div>
-    <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
+
     <span class="block text-sm text-gray-500 sm:text-center dark:text-gray-400"
       >© 2022 <a href="#" class="hover:underline">JPM Palawan</a>. All Rights
       Reserved.

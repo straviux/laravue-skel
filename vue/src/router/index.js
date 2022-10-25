@@ -30,11 +30,13 @@ const routes = [
       {
         path: "/login",
         name: "Login",
+        meta: {title:'Login'},
         component: Login,
       },
       {
         path: "/register",
         name: "Register",
+        meta: {title:'Register'},
         component: Register,
       },
     ],
@@ -55,11 +57,14 @@ const router = createRouter( {
 })
 
 router.beforeEach((to, from, next) => {
+  document.title = `JPM - ${to.meta.title}`
+  console.log(to.meta);
   if (to.meta.requiresAuth && !store.state.user.token) {
     next({ name: "Login" });
   } else if (store.state.user.token && to.meta.isGuest) {
     next({ name: "Dashboard" });
   } else {
+
     next();
   }
 });

@@ -1,6 +1,6 @@
 import {createStore} from "vuex"
 import axiosClient from "../axios"
-
+import story_actions from "./stories"
 
 const store = createStore(
   {
@@ -29,6 +29,22 @@ const store = createStore(
         data: {}
       },
 
+      storyList: {
+        loading: false,
+        links: [],
+        data: []
+      },
+      featuredStoryList: {
+        loading: false,
+        links: [],
+        data: []
+      },
+      currentStory: {
+        loading: false,
+        data: {}
+      },
+
+
       notification: {
         show: false,
         type: 'success',
@@ -38,6 +54,7 @@ const store = createStore(
     },
     getters: {},
     actions: {
+      // story_actions,
       getUser({commit}) {
         return axiosClient.get('/user')
           .then(res => {
@@ -83,8 +100,6 @@ const store = createStore(
           throw err;
         })
       },
-
-
 
       getNews({commit}, id) {
         commit("setCurrentNewsLoading", true);

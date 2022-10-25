@@ -4,19 +4,19 @@ const childRoutes =[ {
           path: "list",
           component: NewsList,
           name: "NewsList",
-          meta: {name:"list"}
+          meta: {title:"News List"}
         },
         {
           path: "write-news",
           component: NewsForm,
           name: "WriteNews",
-          meta: {name:"write"}
+          meta: {title:"write News"}
         },
         {
           path: ":id/update",
           component: NewsForm,
           name: "UpdateNews",
-          meta: {name:"update"}
+          meta: {title:"update News"}
         }];
 
 export default childRoutes;

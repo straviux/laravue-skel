@@ -15,6 +15,7 @@ const routes = {
           path: "",
           component: Home,
           name: "Home",
+          meta: {title:'Home'},
         },
 
       // newsRoutes
@@ -23,12 +24,14 @@ const routes = {
         redirect: {name:"PublicNewsList"}, //imported from from new-routes
         component: News,
         name: "NewsModule",
+        meta: {title:'News List'},
         children:newsRoutes
       },
 
       {
         path: "page-not-found",
         component: NotFound,
+        meta: {title:'Page Not Found'},
         name: "NotFound"
       }
     ]

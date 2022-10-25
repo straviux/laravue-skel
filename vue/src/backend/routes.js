@@ -1,7 +1,9 @@
 const Module = () => import("./Module.vue");
 const Dashboard = () => import("./components/Dashboard.vue");
 const NewsMaintenance = () => import("./components/NewsMaintenance.vue");
-import childRoutes from "./components/news/news-routes";
+const StoryMaintenance = () => import("./components/StoryMaintenance.vue");
+import newsRoutes from "./components/news/news-routes";
+import storyRoutes from "./components/stories/story-routes";
 
 const routes = {
   path: "/admin",
@@ -12,13 +14,21 @@ const routes = {
     {
       path: "dashboard",
       component: Dashboard,
-      name: "Dashboard"
+      name: "Dashboard",
+      meta: {title:'Dashboard'}
     },{
       path: "news-maintenance",
       redirect: {name:"NewsList"}, //imported from from new-routes
       component: NewsMaintenance,
       name: "NewsMaintenance",
-      children:childRoutes
+      children:newsRoutes
+    }
+    ,{
+      path: "stories-maintenance",
+      redirect: {name:"StoryList"}, //imported from from new-routes
+      component: StoryMaintenance,
+      name: "StoryMaintenance",
+      children:storyRoutes
     }
   ]
 };

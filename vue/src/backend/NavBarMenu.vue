@@ -26,9 +26,14 @@ const route = useRoute();
 const items = [
   { text: "Dashboard", icon: "view-dashboard", to: { name: "Dashboard" } },
   {
-    text: "News Maintenance",
+    text: "News",
     icon: "newspaper-variant",
     to: { name: "NewsMaintenance" },
+  },
+  {
+    text: "Story",
+    icon: "newspaper-variant",
+    to: { name: "StoryMaintenance" },
   },
 ];
 </script>
