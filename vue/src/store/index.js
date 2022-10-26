@@ -84,11 +84,11 @@ const store = createStore(
           })
       },
 
-      getNewsList({commit},{url = null} = {}) {
+      getNewsList({commit},{url = null,article_type_id=null,pageCount=null,status=null,featured=null, search=null} = {}) {
         commit("setNewsLoading", true);
         url = url || '/articles/'
         return axiosClient
-        .get(url)
+        .get(url,{params:{article_type_id:article_type_id,pageCount:pageCount,status:status,featured:featured,search:search}})
         .then((res)=>{
           commit("setNews",res.data);
           commit("setNewsLoading", false);

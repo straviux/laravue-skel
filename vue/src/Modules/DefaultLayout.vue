@@ -109,14 +109,14 @@
             >News</router-link
           >
           <router-link
-            :to="'articles'"
+            :to="{ name: 'PublicStoryList' }"
             class="text-base font-medium text-gray-500 hover:text-gray-900"
-            >Articles</router-link
+            >Stories</router-link
           >
           <router-link
-            :to="'gallery'"
+            :to="{ name: 'PublicEventsList' }"
             class="text-base font-medium text-gray-500 hover:text-gray-900"
-            >Gallery</router-link
+            >Events</router-link
           >
 
           <Popover class="relative" v-slot="{ open }">
@@ -379,12 +379,12 @@ const solutions = [
 ];
 
 const resources = [
-  {
-    name: "Events",
-    description: "See what events we might be planning near you.",
-    href: "#",
-    icon: CalendarIcon,
-  },
+  // {
+  //   name: "Events",
+  //   description: "See what events we might be planning near you.",
+  //   href: "#",
+  //   icon: CalendarIcon,
+  // },
   {
     name: "Frequently Ask Questions",
     description:

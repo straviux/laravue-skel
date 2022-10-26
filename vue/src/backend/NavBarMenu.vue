@@ -24,15 +24,19 @@ import { useRoute } from "vue-router";
 
 const route = useRoute();
 const items = [
-  { text: "Dashboard", icon: "view-dashboard", to: { name: "Dashboard" } },
+  {
+    text: "Dashboard",
+    icon: "view-dashboard-outline",
+    to: { name: "Dashboard" },
+  },
   {
     text: "News",
-    icon: "newspaper-variant",
+    icon: "newspaper-variant-outline",
     to: { name: "NewsMaintenance" },
   },
   {
     text: "Story",
-    icon: "newspaper-variant",
+    icon: "comment-quote-outline",
     to: { name: "StoryMaintenance" },
   },
 ];

@@ -5,18 +5,16 @@
     <form method="GET" class="flex gap-3">
       <div class="relative text-gray-600 focus-within:text-gray-400">
         <span class="absolute inset-y-0 left-0 flex items-center pl-2">
-          <button
-            type="submit"
-            class="p-1 focus:outline-none focus:shadow-outline"
-          >
+          <span class="p-1 focus:outline-none focus:shadow-outline">
             <mdicon name="magnify" />
-          </button>
+          </span>
         </span>
         <input
           type="search"
           name="q"
+          v-model="model.search"
           class="w-[300px] py-2 bg-gray-200 rounded-md pl-10 focus:outline-none focus:bg-white text-[15px]"
-          placeholder="Search for headline or author"
+          placeholder="Search for headline"
           autocomplete="off"
         />
       </div>
@@ -28,6 +26,7 @@
               type="radio"
               name="status"
               class="radio radio-sm checked:bg-slate-700"
+              v-model="model.status"
               :value="f"
               :checked="f == 'all'"
             />
@@ -42,7 +41,7 @@
               type="checkbox"
               class="checkbox checkbox-sm dark:orange-600"
               name="featured"
-              value="featured"
+              v-model="model.featured"
             />
           </label>
         </div>
@@ -51,7 +50,10 @@
         <div class="form-control ml-2 pl-2 border-gray-300">
           <label class="label cursor-pointer space-x-1">
             <span class="label-text text-[15px]">Show</span>
-            <select class="select select-bordered select-xs">
+            <select
+              class="select select-bordered select-xs"
+              v-model="model.pageCount"
+            >
               <option>5</option>
               <option>10</option>
               <option>20</option>
@@ -66,7 +68,7 @@
         <div
           class="form-control ml-2 pl-2 border-gray-300 align-items-center justify-center"
         >
-          <button class="btn btn-sm gap-2">
+          <button class="btn btn-sm gap-2" @click.prevent="filterTable">
             <mdicon name="filter-multiple-outline" />
             Filter
           </button>
@@ -128,7 +130,7 @@
   </div>
 </template>
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import store from "../../../store";
 import CustomTable from "../CustomTable.vue";
@@ -165,8 +167,11 @@ const headers = [
     sortDirection: "ascending",
   },
 ];
-const newslist = computed(() => store.state.newsList);
 
+const model = ref({ pageCount: 5, featured: false, status: "all", search: "" });
+
+const newslist = computed(() => store.state.newsList);
+store.dispatch("getNewsList", { article_type_id: 1, pageCount: 5 });
 // const totalPage = ref(0);
 // const itemsPerPage = ref(2);
 const update = (data) => {
@@ -181,6 +186,17 @@ const getForPage = (ev, link, page) => {
   }
   store.dispatch("getNewsList", { url: link.url });
 };
-store.dispatch("getNewsList", {});
+
+const filterTable = (event) => {
+  console.log(model.value);
+  event.preventDefault();
+  store.dispatch("getNewsList", {
+    article_type_id: 1,
+    pageCount: model.value.pageCount,
+    featured: model.value.featured,
+    status: model.value.status,
+    search: model.value.search,
+  });
+};
 </script>
 <style scoped></style>

@@ -16,7 +16,7 @@ const routes = {
           component: Home,
           name: "Home",
           meta: {title:'Home'},
-        },
+      },
 
       // newsRoutes
       {
@@ -27,6 +27,19 @@ const routes = {
         meta: {title:'News List'},
         children:newsRoutes
       },
+      {
+        path: "stories",
+        component: Home,
+        name: "PublicStoryList",
+        meta: {title:'Stories'},
+      },
+      {
+        path: "events",
+        component: Home,
+        name: "PublicEventsList",
+        meta: {title:'Events'},
+      },
+
 
       {
         path: "page-not-found",

@@ -33,7 +33,30 @@ class ArticleController extends Controller
         // } else {
         //     return ArticleResource::collection(Article::paginate($numrows));
         // }
-        return ArticleResource::collection(Article::where('article_type_id', 1)->orderBy('created_at', 'DESC')->paginate(5));
+        $article_type_id = $request['article_type_id'];
+        $page_count = $request['pageCount'] > 0 ? $request['pageCount'] : 5;
+        $is_featured =
+            filter_var($request['featured'], FILTER_VALIDATE_BOOLEAN);
+
+        $status = $request['status'];
+
+        $search_headline = $request['search'];
+
+        return ArticleResource::collection(Article::where('article_type_id', $article_type_id)
+            ->when($is_featured, function ($query, $is_featured) {
+                return $query->where('featured', $is_featured);
+            })->when($status, function ($query, $status) {
+                if ($status !== "all") {
+                    $is_active = $status === "active" ? 1 : 0;
+                    return $query->where('status', $is_active);
+                }
+            })->when($search_headline, function ($query, $search_headline) {
+                return $query->where('headline', 'like', '%' . $search_headline . '%');
+            })->orderBy('created_at', 'DESC')->paginate($page_count));
+
+
+
+        // return ArticleResource::collection(Article::where('article_type_id', $article_type_id)->orderBy('created_at', 'DESC')->paginate($page_count));
     }
 
 
