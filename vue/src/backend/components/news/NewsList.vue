@@ -184,7 +184,14 @@ const getForPage = (ev, link, page) => {
   if (!link.url || link.active) {
     return;
   }
-  store.dispatch("getNewsList", { url: link.url });
+  store.dispatch("getNewsList", {
+    url: link.url,
+    article_type_id: 1,
+    pageCount: model.value.pageCount,
+    featured: model.value.featured,
+    status: model.value.status,
+    search: model.value.search,
+  });
 };
 
 const filterTable = (event) => {

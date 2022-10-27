@@ -147,13 +147,7 @@ const headers = [
       "text-[16px] text-slate-600 max-w-[350px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
     headerClass: "text-[20px]",
   },
-  // {
-  //   key: "slug",
-  //   label: "Link",
-  //   sortDirection: "ascending",
-  //   rowClass:
-  //     "text-[14px] text-slate-600 italic max-w-[200px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
-  // },
+
   {
     key: "posted_at",
     label: "date publish",
@@ -170,8 +164,8 @@ const headers = [
 
 const model = ref({ pageCount: 5, featured: false, status: "all", search: "" });
 
-const newslist = computed(() => store.state.newsList);
-store.dispatch("getNewsList", { article_type_id: 2, pageCount: 5 });
+const newslist = computed(() => store.state.storyList);
+store.dispatch("getStoryList", { article_type_id: 2, pageCount: 5 });
 // const totalPage = ref(0);
 // const itemsPerPage = ref(2);
 const update = (data) => {
@@ -184,13 +178,13 @@ const getForPage = (ev, link, page) => {
   if (!link.url || link.active) {
     return;
   }
-  store.dispatch("getNewsList", { url: link.url });
+  store.dispatch("getStoryList", { url: link.url });
 };
 
 const filterTable = (event) => {
   console.log(model.value);
   event.preventDefault();
-  store.dispatch("getNewsList", {
+  store.dispatch("getStoryList", {
     article_type_id: 2,
     pageCount: model.value.pageCount,
     featured: model.value.featured,

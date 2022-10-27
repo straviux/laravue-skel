@@ -38,7 +38,7 @@
       <tbody>
         <tr v-if="!rows.length">
           <td :colspan="model.headers.length + 2" class="text-center">
-            Loading data...
+            No results found
           </td>
         </tr>
         <tr

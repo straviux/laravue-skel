@@ -39,5 +39,15 @@ const items = [
     icon: "comment-quote-outline",
     to: { name: "StoryMaintenance" },
   },
+  {
+    text: "Resolution",
+    icon: "book-open-outline",
+    to: { name: "StoryMaintenance" },
+  },
+  {
+    text: "Events",
+    icon: "star-outline",
+    to: { name: "StoryMaintenance" },
+  },
 ];
 </script>

@@ -76,14 +76,16 @@ class ArticleController extends Controller
         return new ArticleResource($article);
     }
 
-    public function showPublicNewsList()
+    public function showPublicList(Request $request)
     {
-        return ArticleResource::collection(Article::where('status', 1)->where('featured', 0)->where('article_type_id', 1)->orderBy('created_at', 'DESC')->paginate(5));
+        $article_type_id = $request['article_type_id'];
+        return ArticleResource::collection(Article::where('status', 1)->where('featured', 0)->where('article_type_id', $article_type_id)->orderBy('created_at', 'DESC')->paginate(5));
     }
 
-    public function showFeaturedNewsList()
+    public function showFeaturedList(Request $request)
     {
-        return ArticleResource::collection(Article::where('status', 1)->where('featured', 1)->where('article_type_id', 1)->orderBy('created_at', 'DESC')->paginate(5));
+        $article_type_id = $request['article_type_id'];
+        return ArticleResource::collection(Article::where('status', 1)->where('featured', 1)->where('article_type_id', $article_type_id)->orderBy('created_at', 'DESC')->paginate(5));
     }
 
     /**

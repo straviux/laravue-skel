@@ -84,6 +84,108 @@ const store = createStore(
           })
       },
 
+
+      getStoryList({commit},{url = null,article_type_id=null,pageCount=null,status=null,featured=null, search=null} = {}) {
+        commit("setStoryLoading", true);
+        url = url || '/articles/'
+        return axiosClient
+        .get(url,{params:{article_type_id:article_type_id,pageCount:pageCount,status:status,featured:featured,search:search}})
+        .then((res)=>{
+          commit("setStory",res.data);
+          commit("setStoryLoading", false);
+          console.log(res.data)
+          return res;
+        })
+        .catch((err)=>{
+          commit("setStoryLoading", false);
+          throw err;
+        })
+      },
+
+      getStory({commit}, id) {
+        commit("setCurrentStoryLoading", true);
+        return axiosClient
+        .get(`/articles/${id}`)
+        .then((res)=>{
+          commit("setCurrentStory",res.data);
+          commit("setCurrentStoryLoading", false);
+          console.log(res.data)
+          return res;
+        })
+        .catch((err)=>{
+          commit("setCurrentStoryLoading", false);
+          throw err;
+        })
+      },
+
+      saveStory({commit},story){
+        delete story.cover_photo_url;
+        let response;
+        if(story.id) {
+          response = axiosClient.put(`/articles/${story.id}`, story)
+          .then((res)=>{
+            commit("setCurrentStory", res.data);
+            return res;
+          })
+        } else {
+          response = axiosClient.post("/articles", news).then((res)=>{
+            commit("setCurrentStory", res.data);
+            return res;
+          })
+        }
+        return response;
+      },
+
+      getPublicStoryList({commit},{url = null} = {}) {
+        commit("setStoryLoading", true);
+        url = url || '/story-list/'
+        return axiosClient
+        .get(url, {params:{article_type_id:2}})
+        .then((res)=>{
+          commit("setStoryLoading",res.data);
+          commit("setNewsLoading", false);
+          console.log(res.data)
+          return res;
+        })
+        .catch((err)=>{
+          commit("setStoryLoading", false);
+          throw err;
+        })
+      },
+
+      getFeaturedStoryList({commit},{url = null} = {}) {
+        commit("setFeaturedStoryLoading", true);
+        url = url || '/featured-story-list/'
+        return axiosClient
+       .get(url, {params:{article_type_id:2}})
+        .then((res)=>{
+          commit("setFeaturedStory",res.data);
+          commit("setFeaturedStoryLoading", false);
+          console.log(res.data)
+          return res;
+        })
+        .catch((err)=>{
+          commit("setFeaturedStoryLoading", false);
+          throw err;
+        })
+      },
+
+      getStoryBySlug({commit}, slug) {
+        commit("setCurrentStoryLoading", true);
+        return axiosClient
+        .get(`/story-by-slug/${slug}`)
+        .then((res)=>{
+          commit("setCurrentStory",res.data);
+          commit("setCurrentStoryLoading", false);
+          console.log(res.data)
+          return res;
+        })
+        .catch((err)=>{
+          commit("setCurrentStoryLoading", false);
+          throw err;
+        })
+      },
+
       getNewsList({commit},{url = null,article_type_id=null,pageCount=null,status=null,featured=null, search=null} = {}) {
         commit("setNewsLoading", true);
         url = url || '/articles/'
@@ -138,7 +240,7 @@ const store = createStore(
         commit("setNewsLoading", true);
         url = url || '/news-list/'
         return axiosClient
-        .get(url)
+        .get(url, {params:{article_type_id:1}})
         .then((res)=>{
           commit("setNews",res.data);
           commit("setNewsLoading", false);
@@ -155,7 +257,7 @@ const store = createStore(
         commit("setFeaturedNewsLoading", true);
         url = url || '/featured-news-list/'
         return axiosClient
-        .get(url)
+        .get(url, {params:{article_type_id:1}})
         .then((res)=>{
           commit("setFeaturedNews",res.data);
           commit("setFeaturedNewsLoading", false);
@@ -205,6 +307,29 @@ const store = createStore(
       setCurrentNews: (state, news)=>{
         state.currentNews.data = news.data;
       },
+
+      // SET STORIES
+      setFeaturedStoryLoading: (state, loading) => {
+        state.featuredStoryList.loading = loading;
+      },
+      setFeaturedStory: (state, story)=>{
+        state.featuredStoryList.data = story.data;
+        state.featuredStoryList.links = atory.meta.links;
+      },
+      setStoryLoading: (state, loading) => {
+        state.storyList.loading = loading;
+      },
+      setStory: (state, story)=>{
+        state.storyList.data = story.data;
+        state.storyList.links = story.meta.links;
+      },
+      setCurrentStoryLoading: (state, loading) => {
+        state.currentStory.loading = loading;
+      },
+      setCurrentStory: (state, story)=>{
+        state.currentStory.data = story.data;
+      },
+
       logout: (state) => {
         state.user.token = null;
         state.user.data = {};

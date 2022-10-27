@@ -161,13 +161,12 @@
 <script setup>
 import { ref, watch } from "vue";
 import store from "../../../store";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 // import router from "../../../router";
 
 const route = useRoute();
-const router = useRouter();
 const quill = ref(null);
 let model = ref({
   headline: "",
@@ -178,7 +177,7 @@ let model = ref({
   slug: "",
   cover_photo: "",
   cover_photo_url: "",
-  article_type_id: 2, // 1-news  2-blog  3-article
+  article_type_id: 2, // 1-news  2-story  3-article
 });
 let action = "created";
 
@@ -210,7 +209,7 @@ const saveNews = () => {
     .catch((err) => {
       store.commit("notify", {
         type: "error",
-        message: "Something went wrong, please try again or contact your admin",
+        message: "Something went wrong, please try again",
       });
     });
 };
