@@ -35,3 +35,8 @@ Route::get('/featured-story-list/', [App\Http\Controllers\ArticleController::cla
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+
+Route::get('/test', function () {
+    return view('welcome');
+});
