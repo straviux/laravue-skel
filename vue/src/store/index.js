@@ -1,6 +1,5 @@
 import {createStore} from "vuex"
 import axiosClient from "../axios"
-import story_actions from "./stories"
 
 const store = createStore(
   {

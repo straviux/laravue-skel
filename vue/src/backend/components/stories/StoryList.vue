@@ -88,7 +88,7 @@
         </button>
 
         <router-link
-          :to="{ name: 'ViewNews', params: { slug: data.rowData.slug } }"
+          :to="{ name: 'ViewStory', params: { slug: data.rowData.slug } }"
           class="text-blue-500 underline gap-1 btn btn-link btn-xs text-[12px]"
           target="_blank"
         >

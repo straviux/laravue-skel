@@ -307,7 +307,7 @@
           alt="House of Representative Logo"
         />
         <img
-          src="../assets/img/jpm logo colored.gif"
+          src="../assets/img/jpm_logo_colored.gif"
           class="mr-3 h-16"
           alt="House of Representative Logo"
         />
