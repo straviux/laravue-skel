@@ -18,26 +18,31 @@ const store = createStore(
         links: [],
         data: []
       },
-      featuredNewsList: {
+
+      featuredList: {
         loading: false,
         links: [],
         data: []
       },
+
+      latestList: {
+        loading: false,
+        links: [],
+        data: []
+      },
+
       currentNews: {
         loading: false,
         data: {}
       },
+
 
       storyList: {
         loading: false,
         links: [],
         data: []
       },
-      featuredStoryList: {
-        loading: false,
-        links: [],
-        data: []
-      },
+
       currentStory: {
         loading: false,
         data: {}
@@ -135,36 +140,38 @@ const store = createStore(
         return response;
       },
 
+
+      getLatestList({commit},{url = null, article_type_id=null} = {}) {
+        commit("setListLoading", true);
+        url = url || '/latest-list/'
+        return axiosClient
+        .get(url, {params:{article_type_id:article_type_id}})
+        .then((res)=>{
+          commit("setList",res.data);
+          commit("setListLoading", false);
+          console.log(res)
+          return res;
+        })
+        .catch((err)=>{
+          commit("setListLoading", false);
+          throw err;
+        })
+      },
+
+
       getPublicStoryList({commit},{url = null} = {}) {
         commit("setStoryLoading", true);
         url = url || '/story-list/'
         return axiosClient
         .get(url, {params:{article_type_id:2}})
         .then((res)=>{
-          commit("setStoryLoading",res.data);
-          commit("setNewsLoading", false);
-          console.log(res.data)
+          commit("setStory",res.data);
+          commit("setStoryLoading", false);
+          console.log(res)
           return res;
         })
         .catch((err)=>{
           commit("setStoryLoading", false);
-          throw err;
-        })
-      },
-
-      getFeaturedStoryList({commit},{url = null} = {}) {
-        commit("setFeaturedStoryLoading", true);
-        url = url || '/featured-story-list/'
-        return axiosClient
-       .get(url, {params:{article_type_id:2}})
-        .then((res)=>{
-          commit("setFeaturedStory",res.data);
-          commit("setFeaturedStoryLoading", false);
-          console.log(res.data)
-          return res;
-        })
-        .catch((err)=>{
-          commit("setFeaturedStoryLoading", false);
           throw err;
         })
       },
@@ -252,19 +259,19 @@ const store = createStore(
         })
       },
 
-      getFeaturedNewsList({commit},{url = null} = {}) {
-        commit("setFeaturedNewsLoading", true);
-        url = url || '/featured-news-list/'
+      getFeaturedList({commit},{url = null,article_type_id=null} = {}) {
+        commit("setFeaturedLoading", true);
+        url = url || '/featured-list/'
         return axiosClient
-        .get(url, {params:{article_type_id:1}})
+        .get(url, {params:{article_type_id:article_type_id}})
         .then((res)=>{
-          commit("setFeaturedNews",res.data);
-          commit("setFeaturedNewsLoading", false);
+          commit("setFeatured",res.data);
+          commit("setFeaturedLoading", false);
           console.log(res.data)
           return res;
         })
         .catch((err)=>{
-          commit("setFeaturedNewsLoading", false);
+          commit("setFeaturedLoading", false);
           throw err;
         })
       },
@@ -286,12 +293,20 @@ const store = createStore(
       },
     },
     mutations: {
-      setFeaturedNewsLoading: (state, loading) => {
-        state.featuredNewsList.loading = loading;
+      setListLoading: (state, loading) => {
+        state.latestList.loading = loading;
       },
-      setFeaturedNews: (state, news)=>{
-        state.featuredNewsList.data = news.data;
-        state.featuredNewsList.links = news.meta.links;
+      setList: (state, article)=>{
+        state.latestList.data = article.data;
+        state.latestList.links = article.meta.links;
+      },
+
+      setFeaturedLoading: (state, loading) => {
+        state.featuredList.loading = loading;
+      },
+      setFeatured: (state, article)=>{
+        state.featuredList.data = article.data;
+        state.featuredList.links = article.meta.links;
       },
       setNewsLoading: (state, loading) => {
         state.newsList.loading = loading;

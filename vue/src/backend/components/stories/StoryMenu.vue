@@ -1,5 +1,12 @@
 <template>
-  <div class="navbar mb-10 p-6 bg-white max-w-7xl mx-auto">
+  <div
+    class="navbar mb-10 p-6 bg-white mx-auto"
+    :class="
+      route.name == 'WriteStory' || route.name == 'UpdateStory'
+        ? 'max-w-7xl'
+        : ''
+    "
+  >
     <div class="navbar-start">
       <div class="text-sm breadcrumbs">
         <ul>

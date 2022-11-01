@@ -51,9 +51,67 @@
       </div>
       <!-- /End replace -->
     </div>
-    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+    <div
+      class="mx-auto py-12 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-100 to-white"
+    >
+      <div class="flex flex-wrap justify-center gap-4">
+        <div class="w-full mb-6">
+          <h5 class="text-3xl text-gray-600 text-center">
+            Featured Post
+            <div class="border-b-2 w-[6rem] mx-auto mt-4 border-gray-400"></div>
+          </h5>
+        </div>
+
+        <router-link
+          :to="{
+            name: 'ViewNews',
+            params: { slug: row.slug },
+          }"
+          class="card card-compact w-96 bg-base-50 shadow-xl w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6 mb-4"
+          v-for="(row, i) in featuredList.data"
+        >
+          <figure>
+            <img
+              :src="row.cover_photo_url"
+              class="object-cover h-48 w-96"
+              alt="Shoes"
+            />
+          </figure>
+          <div class="card-body">
+            <h2 class="card-title text-normal">{{ row.headline }}</h2>
+            <!-- <p>{{ row.excerpt }}</p> -->
+          </div>
+        </router-link>
+        <div class="w-full flex justify-center mt-5 pb-5">
+          <nav
+            class="relative z-0 inline-flex items-center justify-center rounded-md shadow-sm -space-x-px"
+            aria-label="Pagination"
+          >
+            <a
+              v-for="(link, i) of featuredList.links"
+              :key="i"
+              :disabled="!link.url"
+              href="#"
+              @click="getForPage($event, link, i + 1, 'getFeaturedList')"
+              aria-current="page"
+              class="relative inline-flex items-center px-4 py-2 border text-xs font-medium whitespace-nowrap hover:bg-slate-400 hover:border-slate-400 hover:text-slate-50"
+              :class="[
+                link.active
+                  ? 'z-10 bg-slate-400 border-slate-400 text-slate-50'
+                  : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
+                i === 0
+                  ? 'rounded-l-md bg-gray-100 hover:bg-gray-100 hover:border-gray-300 hover:text-gray-500'
+                  : '',
+                i === featuredList.links.length - 1 ? 'rounded-r-md' : '',
+              ]"
+              v-html="link.label"
+            >
+            </a>
+          </nav>
+        </div>
+      </div>
       <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
-        <section
+        <!-- <section
           class="col-span-2 h-fit font-bold tracking-tight bg-white rounded border border-gray-200 shadow-md px-4 py-3"
         >
           <h5
@@ -128,9 +186,9 @@
               </div>
             </template>
           </custom-list>
-        </section>
+        </section> -->
 
-        <section
+        <!-- <section
           class="col-span-2 lg:col-span-1 h-fit w-full font-bold tracking-tight bg-white rounded-lg border border-gray-200 shadow-md px-4 py-3"
         >
           <h5
@@ -198,7 +256,108 @@
               </div>
             </template>
           </custom-list>
+        </section> -->
+      </div>
+    </div>
+
+    <div
+      class="mx-auto py-12 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-100 to-white border-2"
+    >
+      <div class="flex flex-wrap justify-center gap-4">
+        <div class="w-full mb-6">
+          <h5 class="text-3xl text-gray-600 text-center">
+            Latest Post
+            <div class="border-b-2 w-[6rem] mx-auto mt-4 border-gray-400"></div>
+          </h5>
+        </div>
+        <section
+          class="col-span-2 h-fit font-bold tracking-tight bg-white rounded-xl shadow-md px-4 py-3 max-w-7xl"
+        >
+          <custom-list :rows="latestlist.data">
+            <template v-slot:list="data">
+              <router-link
+                :to="{
+                  name:
+                    data.rowData.article_type_id == 1
+                      ? 'ViewNews'
+                      : data.rowData.article_type_id == 2
+                      ? 'ViewStory'
+                      : 'NotFound',
+                  params: { slug: data.rowData.slug },
+                }"
+                class="card card-compact card-side hover:bg-blue-100 rounded-none px-4 border-b mb-4 py-3"
+              >
+                <figure>
+                  <img
+                    class="object-cover h-48 w-48"
+                    alt="Cover Photo"
+                    :src="data.rowData.cover_photo_url"
+                  />
+                </figure>
+                <div class="card-body">
+                  <h5 class="mb-2 md:text-xl text-gray-700">
+                    {{ data.rowData.headline }}
+                  </h5>
+                  <p class="font-normal text-gray-700 hidden md:block">
+                    {{ data.rowData.excerpt }}
+                  </p>
+                  <div class="card-actions lg:justify-end pt-8 tags py-3">
+                    <div
+                      class="badge badge-ghost py-3 text-gray-500 font-semibold"
+                    >
+                      <mdicon name="calendar" size="18" class="mr-1" />
+                      {{ $filters.moment(data.rowData.created_at, "ll") }}
+                    </div>
+                  </div>
+                </div>
+              </router-link>
+            </template>
+
+            <template v-slot:pagination>
+              <div class="flex justify-center mt-5 pb-5">
+                <nav
+                  class="relative z-0 inline-flex items-center justify-center rounded-md shadow-sm -space-x-px"
+                  aria-label="Pagination"
+                >
+                  <a
+                    v-for="(link, i) of latestlist.links"
+                    :key="i"
+                    :disabled="!link.url"
+                    href="#"
+                    @click="
+                      getForPage($event, link, i + 1, 'getPublicNewsList')
+                    "
+                    aria-current="page"
+                    class="relative inline-flex items-center px-4 py-2 border text-xs font-medium whitespace-nowrap hover:bg-slate-400 hover:border-slate-400 hover:text-slate-50"
+                    :class="[
+                      link.active
+                        ? 'z-10 bg-slate-400 border-slate-400 text-slate-50'
+                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
+                      i === 0
+                        ? 'rounded-l-md bg-gray-100 hover:bg-gray-100 hover:border-gray-300 hover:text-gray-500'
+                        : '',
+                      i === latestlist.links.length - 1 ? 'rounded-r-md' : '',
+                    ]"
+                    v-html="link.label"
+                  >
+                  </a>
+                </nav>
+              </div>
+            </template>
+          </custom-list>
         </section>
+      </div>
+    </div>
+    <div
+      class="mx-auto py-12 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-100 to-white border-2"
+    >
+      <div class="flex flex-wrap justify-center gap-4">
+        <div class="w-full mb-6">
+          <h5 class="text-3xl text-gray-600 text-center">
+            Gallery
+            <div class="border-b-2 w-[6rem] mx-auto mt-4 border-gray-400"></div>
+          </h5>
+        </div>
       </div>
     </div>
   </main>
@@ -220,10 +379,10 @@ const getImageUrl = (name) => {
   return new URL(`../img/${name}`, import.meta.url).href;
 };
 
-store.dispatch("getFeaturedNewsList");
-store.dispatch("getPublicNewsList");
-const featuredNewsList = computed(() => store.state.featuredNewsList);
-const newslist = computed(() => store.state.newsList);
+store.dispatch("getFeaturedList");
+store.dispatch("getLatestList");
+const featuredList = computed(() => store.state.featuredList);
+const latestlist = computed(() => store.state.latestList);
 const getForPage = (ev, link, page, api) => {
   ev.preventDefault();
   if (!link.url || link.active) {

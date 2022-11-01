@@ -25,6 +25,7 @@ class ArticleResource extends JsonResource
             'content' => $this->content,
             'status' => !!$this->status,
             'featured' => !!$this->featured,
+            'article_type_id' => $this->article_type_id,
             'created_at' => (new \DateTime($this->created_at))->format('Y-m-d H:i:s'),
             'updated_at' => (new \DateTime($this->updated_at))->format('Y-m-d H:i:s'),
             'posted_at' => (new \DateTime($this->posted_at))->format('Y-m-d H:i:s'),

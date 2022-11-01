@@ -2,7 +2,7 @@
   <div class="flex flex-col md:flex-row gap-10 justify-between items-center">
     <div>
       <h1 class="font-extrabold text-4xl text-blueGray-700 drop-shadow-lg">
-        System Title
+        JPM Palawan
       </h1>
       <p>{{ getDateTime() }}</p>
     </div>

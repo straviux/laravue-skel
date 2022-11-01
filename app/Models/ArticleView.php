@@ -9,6 +9,6 @@ class ArticleView extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'view_count', 'updated_at', 'created_at'
+        'article_id', 'view_count', 'updated_at', 'created_at'
     ];
 }

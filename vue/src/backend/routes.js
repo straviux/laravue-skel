@@ -30,6 +30,22 @@ const routes = {
       name: "StoryMaintenance",
       children:storyRoutes
     }
+
+    ,{
+      path: "resolutions-maintenance",
+      // redirect: {name:"StoryList"}, //imported from from new-routes
+      component: StoryMaintenance,
+      name: "ResolutionMaintenance",
+      // children:storyRoutes
+    }
+
+    ,{
+      path: "events-maintenance",
+      // redirect: {name:"StoryList"}, //imported from from new-routes
+      component: StoryMaintenance,
+      name: "EventsMaintenance",
+      // children:storyRoutes
+    }
   ]
 };
 

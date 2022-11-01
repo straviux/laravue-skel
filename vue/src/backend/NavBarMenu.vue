@@ -42,12 +42,12 @@ const items = [
   {
     text: "Resolution",
     icon: "book-open-outline",
-    to: { name: "StoryMaintenance" },
+    to: { name: "ResolutionMaintenance" },
   },
   {
     text: "Events",
     icon: "star-outline",
-    to: { name: "StoryMaintenance" },
+    to: { name: "EventsMaintenance" },
   },
 ];
 </script>

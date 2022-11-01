@@ -79,14 +79,20 @@ class ArticleController extends Controller
     public function showPublicList(Request $request)
     {
         $article_type_id = $request['article_type_id'];
-        return ArticleResource::collection(Article::where('status', 1)->where('featured', 0)->where('article_type_id', $article_type_id)->orderBy('created_at', 'DESC')->paginate(5));
+        return ArticleResource::collection(Article::where('status', 1)->where('featured', 0)->when($article_type_id, function ($query, $article_type_id) {
+            return $query->where('article_type_id', $article_type_id);
+        })->orderBy('created_at', 'DESC')->paginate(5));
     }
 
     public function showFeaturedList(Request $request)
     {
         $article_type_id = $request['article_type_id'];
-        return ArticleResource::collection(Article::where('status', 1)->where('featured', 1)->where('article_type_id', $article_type_id)->orderBy('created_at', 'DESC')->paginate(5));
+        return ArticleResource::collection(Article::where('status', 1)->where('featured', 1)
+            ->when($article_type_id, function ($query, $article_type_id) {
+                return $query->where('article_type_id', $article_type_id);
+            })->orderBy('created_at', 'DESC')->paginate(5));
     }
+
 
     /**
      * Store a newly created resource in storage.

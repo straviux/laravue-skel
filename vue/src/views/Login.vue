@@ -1,14 +1,10 @@
 <template>
-  <div
-    class="bg-no-repeat bg-cover bg-center relative"
-    id="login-container"
-  >
+  <div class="bg-no-repeat bg-cover bg-center relative" id="login-container">
     <div
-      class="absolute bg-gradient-to-b from-cyan-600 to-blue-400 opacity-75 inset-0 z-0"
+      class="absolute bg-gradient-to-b from-cyan-400 to-blue-400 opacity-75 inset-0 z-0"
     ></div>
-    <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
-
-      <div class="flex justify-center self-center z-10">
+    <div class="min-h-screen flex mx-0 justify-center">
+      <div class="flex justify-center items-center z-10">
         <div class="p-12 bg-white mx-auto rounded-2xl w-100">
           <div class="mb-4">
             <h3 class="font-semibold text-2xl text-gray-800">Sign In</h3>
@@ -71,11 +67,11 @@
                   Remember me
                 </label>
               </div>
-              <div class="text-sm">
+              <!-- <div class="text-sm">
                 <a href="#" class="text-green-400 hover:text-green-500">
                   Forgot your password?
                 </a>
-              </div>
+              </div> -->
             </div>
             <div>
               <button
@@ -111,7 +107,7 @@ let errorMessage = ref("");
 
 const login = (ev) => {
   ev.preventDefault();
-  if(!user.username || !user.password) {
+  if (!user.username || !user.password) {
     return;
   }
   store
@@ -126,6 +122,6 @@ const login = (ev) => {
 </script>
 <style lang="scss" scoped>
 #login-container {
-  background-image: url('../assets/img/login_bg.jpg');
+  background-image: url("../assets/img/login_bg.jpg");
 }
 </style>

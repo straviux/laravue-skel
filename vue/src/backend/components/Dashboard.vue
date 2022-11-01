@@ -1,13 +1,11 @@
 <template>
+  <div>
+    <dashboard-menu class="shadow rounded-lg" />
 
+    dashboard contents here
+  </div>
 </template>
-
-<script>
-export default {
-  name: "Dashboard"
-}
+<script setup>
+import DashboardMenu from "./dashboard/DashboardMenu.vue";
 </script>
-
-<style scoped>
-
-</style>
+<style scoped></style>

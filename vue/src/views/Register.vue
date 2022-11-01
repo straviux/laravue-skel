@@ -1,10 +1,10 @@
 <template>
   <div id="login-container" class="bg-no-repeat bg-cover bg-center relative">
     <div
-      class="absolute bg-gradient-to-b from-blue-600 to-green-400 opacity-75 inset-0 z-0"
+      class="absolute bg-gradient-to-b from-cyan-400 to-blue-400 opacity-75 inset-0 z-0"
     ></div>
-    <div class="min-h-screen sm:flex sm:flex-row mx-0 justify-center">
-      <div class="flex justify-center self-center z-10">
+    <div class="min-h-screen flex mx-0 justify-center">
+      <div class="flex justify-center items-center z-10">
         <div class="p-12 bg-white mx-auto rounded-2xl w-100">
           <div class="mb-4">
             <a
