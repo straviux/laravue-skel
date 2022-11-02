@@ -183,7 +183,7 @@ let action = "created";
 
 //watch current news from store
 watch(
-  () => store.state.currentNews.data,
+  () => store.state.articles.current.data,
   (newVal, oldVal) => {
     model.value = {
       ...JSON.parse(JSON.stringify(newVal)),
@@ -193,13 +193,13 @@ watch(
 );
 
 if (route.params.id) {
-  store.dispatch("getNews", route.params.id);
+  store.dispatch("articles/getById", route.params.id);
   action = "updated";
 }
 
 const saveNews = () => {
   store
-    .dispatch("saveNews", model.value)
+    .dispatch("articles/saveArticle", model.value)
     .then(({ data }) => {
       store.commit("notify", {
         type: "success",

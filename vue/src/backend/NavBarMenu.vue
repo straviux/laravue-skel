@@ -30,6 +30,11 @@ const items = [
     to: { name: "Dashboard" },
   },
   {
+    text: "Carousel",
+    icon: "view-carousel-outline",
+    to: { name: "CarouselMaintenance" },
+  },
+  {
     text: "News",
     icon: "newspaper-variant-outline",
     to: { name: "NewsMaintenance" },

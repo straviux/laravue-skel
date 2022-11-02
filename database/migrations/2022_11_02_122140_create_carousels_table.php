@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('carousels', function (Blueprint $table) {
             $table->id();
-            $table->string('slide', 255);
+            $table->string('slide', 155);
             $table->tinyInteger('order');
             $table->tinyInteger('status');
             $table->timestamps();

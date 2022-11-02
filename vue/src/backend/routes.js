@@ -2,8 +2,10 @@ const Module = () => import("./Module.vue");
 const Dashboard = () => import("./components/Dashboard.vue");
 const NewsMaintenance = () => import("./components/NewsMaintenance.vue");
 const StoryMaintenance = () => import("./components/StoryMaintenance.vue");
+const CarouselMaintenance = () => import("./components/CarouselMaintenance.vue");
 import newsRoutes from "./components/news/news-routes";
 import storyRoutes from "./components/stories/story-routes";
+import carouselRoutes from "./components/carousel/routes.js";
 
 const routes = {
   path: "/admin",
@@ -17,6 +19,13 @@ const routes = {
       name: "Dashboard",
       meta: {title:'Dashboard'}
     },{
+      path: "carousel-maintenance",
+      redirect: {name:"CarouselTable"},
+      component: CarouselMaintenance,
+      name: "CarouselMaintenance",
+      children:carouselRoutes
+    }
+    ,{
       path: "news-maintenance",
       redirect: {name:"NewsList"}, //imported from from new-routes
       component: NewsMaintenance,

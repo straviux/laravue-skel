@@ -9,12 +9,16 @@
       :start-auto-play="true"
       :timeout="5000"
     >
-      <CarouselSlide v-for="(slide, index) in carouselSlides" :key="index">
+      <CarouselSlide
+        v-for="(slide, index) in carouselSlide"
+        :key="index"
+        v-if="!slides.loading"
+      >
         <div
           v-show="currentSlide.currentSlide === index + 1"
           class="slide-info"
         >
-          <img :src="getImageUrl(slide)" alt="carousel" />
+          <img :src="slide.slide_url" alt="carousel" />
         </div>
       </CarouselSlide>
     </Carousel>
@@ -324,9 +328,7 @@
                     :key="i"
                     :disabled="!link.url"
                     href="#"
-                    @click="
-                      getForPage($event, link, i + 1, 'getPublicNewsList')
-                    "
+                    @click="getForPage($event, link, i + 1, 'getLatestList')"
                     aria-current="page"
                     class="relative inline-flex items-center px-4 py-2 border text-xs font-medium whitespace-nowrap hover:bg-slate-400 hover:border-slate-400 hover:text-slate-50"
                     :class="[
@@ -348,7 +350,7 @@
         </section>
       </div>
     </div>
-    <div
+    <!-- <div
       class="mx-auto py-12 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-100 to-white border-2"
     >
       <div class="flex flex-wrap justify-center gap-4">
@@ -359,7 +361,7 @@
           </h5>
         </div>
       </div>
-    </div>
+    </div> -->
   </main>
 </template>
 
@@ -369,19 +371,28 @@ import CarouselSlide from "./CarouselSlide.vue";
 import CustomList from "../CustomList.vue";
 import store from "../../store";
 import { computed, ref } from "vue";
+const slides = computed(() => store.state.carousels.list);
+store.dispatch("carousels/getPublic");
+const carouselSlide = computed(() =>
+  store.state.carousels.list.data.map((value) => {
+    return value.slide_url;
+  })
+);
+// const carouselSlides = [
+//   "../../assets/img/1.jpg",
+//   "../../assets/img/3.jpg",
+//   "../../assets/img/5.jpg",
+// ];
+// const getImageUrl = (name) => {
+//   return new URL(`${name}`, import.meta.url).href;
+// };
 
-const carouselSlides = [
-  "../../assets/img/1.jpg",
-  "../../assets/img/3.jpg",
-  "../../assets/img/5.jpg",
-];
-const getImageUrl = (name) => {
-  return new URL(`../img/${name}`, import.meta.url).href;
-};
-
-store.dispatch("getFeaturedList");
+store.dispatch("articles/getPublicList", {
+  featured: 1,
+  pageCount: 5,
+});
 store.dispatch("getLatestList");
-const featuredList = computed(() => store.state.featuredList);
+const featuredList = computed(() => store.state.articles.list);
 const latestlist = computed(() => store.state.latestList);
 const getForPage = (ev, link, page, api) => {
   ev.preventDefault();

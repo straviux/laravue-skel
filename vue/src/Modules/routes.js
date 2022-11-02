@@ -2,8 +2,9 @@
 const DefaultLayout = () => import("./DefaultLayout.vue");
 import Home from "./home/Home.vue";
 import News from "./news/News.vue";
+import Stories from "./stories/Story.vue";
 import newsRoutes from "./news/news-routes";
-import storyRoutes from "./story/story-routes";
+import storyRoutes from "./stories/story-routes";
 import NotFound from "../views/NotFound.vue";
 
 const routes = {
@@ -34,7 +35,7 @@ const routes = {
       {
         path: "stories",
         redirect: {name:"PublicStoryList"}, //imported from from story-routes
-        component: News,
+        component: Stories,
         name: "StoryModule",
         meta: {title:'Stories'},
         children:storyRoutes

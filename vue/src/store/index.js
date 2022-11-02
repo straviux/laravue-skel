@@ -1,6 +1,7 @@
 import {createStore} from "vuex"
 import axiosClient from "../axios"
-
+import articlesModule from "./modules/articles/index"
+import carouselModule from "./modules/carousel/index"
 const store = createStore(
   {
     state: {
@@ -13,39 +14,11 @@ const store = createStore(
       loading: false,
       data: {}
       },
-      newsList: {
-        loading: false,
-        links: [],
-        data: []
-      },
-
-      featuredList: {
-        loading: false,
-        links: [],
-        data: []
-      },
 
       latestList: {
         loading: false,
         links: [],
         data: []
-      },
-
-      currentNews: {
-        loading: false,
-        data: {}
-      },
-
-
-      storyList: {
-        loading: false,
-        links: [],
-        data: []
-      },
-
-      currentStory: {
-        loading: false,
-        data: {}
       },
 
 
@@ -88,64 +61,11 @@ const store = createStore(
           })
       },
 
-
-      getStoryList({commit},{url = null,article_type_id=null,pageCount=null,status=null,featured=null, search=null} = {}) {
-        commit("setStoryLoading", true);
-        url = url || '/articles/'
-        return axiosClient
-        .get(url,{params:{article_type_id:article_type_id,pageCount:pageCount,status:status,featured:featured,search:search}})
-        .then((res)=>{
-          commit("setStory",res.data);
-          commit("setStoryLoading", false);
-          console.log(res.data)
-          return res;
-        })
-        .catch((err)=>{
-          commit("setStoryLoading", false);
-          throw err;
-        })
-      },
-
-      getStory({commit}, id) {
-        commit("setCurrentStoryLoading", true);
-        return axiosClient
-        .get(`/articles/${id}`)
-        .then((res)=>{
-          commit("setCurrentStory",res.data);
-          commit("setCurrentStoryLoading", false);
-          console.log(res.data)
-          return res;
-        })
-        .catch((err)=>{
-          commit("setCurrentStoryLoading", false);
-          throw err;
-        })
-      },
-
-      saveStory({commit},story){
-        delete story.cover_photo_url;
-        let response;
-        if(story.id) {
-          response = axiosClient.put(`/articles/${story.id}`, story)
-          .then((res)=>{
-            commit("setCurrentStory", res.data);
-            return res;
-          })
-        } else {
-          response = axiosClient.post("/articles", news).then((res)=>{
-            commit("setCurrentStory", res.data);
-            return res;
-          })
-        }
-        return response;
-      },
-
-
-      getLatestList({commit},{url = null, article_type_id=null} = {}) {
+      getLatestList({commit},{url = null,pageCount=null, article_type_id=null, featured=null} = {}) {
         commit("setListLoading", true);
         url = url || '/latest-list/'
         return axiosClient
-        .get(url, {params:{article_type_id:article_type_id}})
+        .get(url, {params:{article_type_id:article_type_id, pageCount:5, featured:0}})
         .then((res)=>{
           commit("setList",res.data);
           commit("setListLoading", false);
@@ -158,139 +78,6 @@ const store = createStore(
         })
       },
 
-
-      getPublicStoryList({commit},{url = null} = {}) {
-        commit("setStoryLoading", true);
-        url = url || '/story-list/'
-        return axiosClient
-        .get(url, {params:{article_type_id:2}})
-        .then((res)=>{
-          commit("setStory",res.data);
-          commit("setStoryLoading", false);
-          console.log(res)
-          return res;
-        })
-        .catch((err)=>{
-          commit("setStoryLoading", false);
-          throw err;
-        })
-      },
-
-      getStoryBySlug({commit}, slug) {
-        commit("setCurrentStoryLoading", true);
-        return axiosClient
-        .get(`/story-by-slug/${slug}`)
-        .then((res)=>{
-          commit("setCurrentStory",res.data);
-          commit("setCurrentStoryLoading", false);
-          console.log(res.data)
-          return res;
-        })
-        .catch((err)=>{
-          commit("setCurrentStoryLoading", false);
-          throw err;
-        })
-      },
-
-      getNewsList({commit},{url = null,article_type_id=null,pageCount=null,status=null,featured=null, search=null} = {}) {
-        commit("setNewsLoading", true);
-        url = url || '/articles/'
-        return axiosClient
-        .get(url,{params:{article_type_id:article_type_id,pageCount:pageCount,status:status,featured:featured,search:search}})
-        .then((res)=>{
-          commit("setNews",res.data);
-          commit("setNewsLoading", false);
-          console.log(res.data)
-          return res;
-        })
-        .catch((err)=>{
-          commit("setNewsLoading", false);
-          throw err;
-        })
-      },
-
-      getNews({commit}, id) {
-        commit("setCurrentNewsLoading", true);
-        return axiosClient
-        .get(`/articles/${id}`)
-        .then((res)=>{
-          commit("setCurrentNews",res.data);
-          commit("setCurrentNewsLoading", false);
-          console.log(res.data)
-          return res;
-        })
-        .catch((err)=>{
-          commit("setCurrentNewsLoading", false);
-          throw err;
-        })
-      },
-      saveNews({commit},news){
-        delete news.cover_photo_url;
-        let response;
-        if(news.id) {
-          response = axiosClient.put(`/articles/${news.id}`, news)
-          .then((res)=>{
-            commit("setCurrentNews", res.data);
-            return res;
-          })
-        } else {
-          response = axiosClient.post("/articles", news).then((res)=>{
-            commit("setCurrentNews", res.data);
-            return res;
-          })
-        }
-        return response;
-      },
-
-      getPublicNewsList({commit},{url = null} = {}) {
-        commit("setNewsLoading", true);
-        url = url || '/news-list/'
-        return axiosClient
-        .get(url, {params:{article_type_id:1}})
-        .then((res)=>{
-          commit("setNews",res.data);
-          commit("setNewsLoading", false);
-          console.log(res.data)
-          return res;
-        })
-        .catch((err)=>{
-          commit("setNewsLoading", false);
-          throw err;
-        })
-      },
-
-      getFeaturedList({commit},{url = null,article_type_id=null} = {}) {
-        commit("setFeaturedLoading", true);
-        url = url || '/featured-list/'
-        return axiosClient
-        .get(url, {params:{article_type_id:article_type_id}})
-        .then((res)=>{
-          commit("setFeatured",res.data);
-          commit("setFeaturedLoading", false);
-          console.log(res.data)
-          return res;
-        })
-        .catch((err)=>{
-          commit("setFeaturedLoading", false);
-          throw err;
-        })
-      },
-
-      getNewsBySlug({commit}, slug) {
-        commit("setCurrentNewsLoading", true);
-        return axiosClient
-        .get(`/news-by-slug/${slug}`)
-        .then((res)=>{
-          commit("setCurrentNews",res.data);
-          commit("setCurrentNewsLoading", false);
-          console.log(res.data)
-          return res;
-        })
-        .catch((err)=>{
-          commit("setCurrentNewsLoading", false);
-          throw err;
-        })
-      },
     },
     mutations: {
       setListLoading: (state, loading) => {
@@ -299,49 +86,6 @@ const store = createStore(
       setList: (state, article)=>{
         state.latestList.data = article.data;
         state.latestList.links = article.meta.links;
-      },
-
-      setFeaturedLoading: (state, loading) => {
-        state.featuredList.loading = loading;
-      },
-      setFeatured: (state, article)=>{
-        state.featuredList.data = article.data;
-        state.featuredList.links = article.meta.links;
-      },
-      setNewsLoading: (state, loading) => {
-        state.newsList.loading = loading;
-      },
-      setNews: (state, news)=>{
-        state.newsList.data = news.data;
-        state.newsList.links = news.meta.links;
-      },
-      setCurrentNewsLoading: (state, loading) => {
-        state.currentNews.loading = loading;
-      },
-      setCurrentNews: (state, news)=>{
-        state.currentNews.data = news.data;
-      },
-
-      // SET STORIES
-      setFeaturedStoryLoading: (state, loading) => {
-        state.featuredStoryList.loading = loading;
-      },
-      setFeaturedStory: (state, story)=>{
-        state.featuredStoryList.data = story.data;
-        state.featuredStoryList.links = atory.meta.links;
-      },
-      setStoryLoading: (state, loading) => {
-        state.storyList.loading = loading;
-      },
-      setStory: (state, story)=>{
-        state.storyList.data = story.data;
-        state.storyList.links = story.meta.links;
-      },
-      setCurrentStoryLoading: (state, loading) => {
-        state.currentStory.loading = loading;
-      },
-      setCurrentStory: (state, story)=>{
-        state.currentStory.data = story.data;
       },
 
       logout: (state) => {
@@ -365,7 +109,10 @@ const store = createStore(
       }, 3000)
     },
     },
-    modules: {}
+    modules: {
+      articles:articlesModule,
+      carousels:carouselModule
+    }
   }
 )
 

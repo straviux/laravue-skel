@@ -54,10 +54,10 @@ const route = useRoute();
 const router = useRouter();
 
 // console.log(route.params.slug);
-const currentStory = computed(() => store.state.currentStory.data);
-const currentStoryLoading = computed(() => store.state.currentStory.loading);
+const currentStory = computed(() => store.state.articles.current.data);
+const currentStoryLoading = computed(() => store.state.articles.current.loading);
 store
-  .dispatch("getStoryBySlug", route.params.slug)
+  .dispatch("articles/getSlug", route.params.slug)
   .then(({ data }) => {
     // add loader stop control here
   })

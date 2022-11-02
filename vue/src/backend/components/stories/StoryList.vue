@@ -77,7 +77,11 @@
     </form>
   </div>
   <div>
-    <custom-table :headers="headers" :rows="newslist.data">
+    <custom-table
+      :headers="headers"
+      :rows="storylist.data"
+      v-if="!storylist.loading"
+    >
       <template v-slot:actionButtons="data">
         <button
           @click="update(data.rowData)"
@@ -104,7 +108,7 @@
             aria-label="Pagination"
           >
             <a
-              v-for="(link, i) of newslist.links"
+              v-for="(link, i) of storylist.links"
               :key="i"
               :disabled="!link.url"
               href="#"
@@ -118,7 +122,7 @@
                 i === 0
                   ? 'rounded-l-md bg-gray-100 hover:bg-gray-100 hover:border-gray-300 hover:text-gray-500'
                   : '',
-                i === newslist.links.length - 1 ? 'rounded-r-md' : '',
+                i === storylist.links.length - 1 ? 'rounded-r-md' : '',
               ]"
               v-html="link.label"
             >
@@ -164,13 +168,13 @@ const headers = [
 
 const model = ref({ pageCount: 5, featured: false, status: "all", search: "" });
 
-const newslist = computed(() => store.state.storyList);
-store.dispatch("getStoryList", { article_type_id: 2, pageCount: 5 });
+const storylist = computed(() => store.state.articles.list);
+store.dispatch("articles/getList", { article_type_id: 2, pageCount: 5 });
 // const totalPage = ref(0);
 // const itemsPerPage = ref(2);
 const update = (data) => {
   console.log(data);
-  router.push({ name: "UpdateNews", params: { id: data.id } });
+  router.push({ name: "UpdateStory", params: { id: data.id } });
 };
 
 const getForPage = (ev, link, page) => {
@@ -178,13 +182,13 @@ const getForPage = (ev, link, page) => {
   if (!link.url || link.active) {
     return;
   }
-  store.dispatch("getStoryList", { url: link.url });
+  store.dispatch("articles/getList", { url: link.url });
 };
 
 const filterTable = (event) => {
   console.log(model.value);
   event.preventDefault();
-  store.dispatch("getStoryList", {
+  store.dispatch("articles/getList", {
     article_type_id: 2,
     pageCount: model.value.pageCount,
     featured: model.value.featured,

@@ -77,7 +77,11 @@
     </form>
   </div>
   <div>
-    <custom-table :headers="headers" :rows="newslist.data">
+    <custom-table
+      :headers="headers"
+      :rows="newslist.data"
+      v-if="!newslist.loading"
+    >
       <template v-slot:actionButtons="data">
         <button
           @click="update(data.rowData)"
@@ -170,8 +174,8 @@ const headers = [
 
 const model = ref({ pageCount: 5, featured: false, status: "all", search: "" });
 
-const newslist = computed(() => store.state.newsList);
-store.dispatch("getNewsList", { article_type_id: 1, pageCount: 5 });
+const newslist = computed(() => store.state.articles.list);
+store.dispatch("articles/getList", { article_type_id: 1, pageCount: 5 });
 // const totalPage = ref(0);
 // const itemsPerPage = ref(2);
 const update = (data) => {
@@ -184,7 +188,7 @@ const getForPage = (ev, link, page) => {
   if (!link.url || link.active) {
     return;
   }
-  store.dispatch("getNewsList", {
+  store.dispatch("articles/getList", {
     url: link.url,
     article_type_id: 1,
     pageCount: model.value.pageCount,
@@ -197,7 +201,7 @@ const getForPage = (ev, link, page) => {
 const filterTable = (event) => {
   console.log(model.value);
   event.preventDefault();
-  store.dispatch("getNewsList", {
+  store.dispatch("articles/getList", {
     article_type_id: 1,
     pageCount: model.value.pageCount,
     featured: model.value.featured,

@@ -79,9 +79,11 @@ class ArticleController extends Controller
     public function showPublicList(Request $request)
     {
         $article_type_id = $request['article_type_id'];
-        return ArticleResource::collection(Article::where('status', 1)->where('featured', 0)->when($article_type_id, function ($query, $article_type_id) {
+        $featured = $request['featured'];
+        $pageCount = $request['pageCount'];
+        return ArticleResource::collection(Article::where('status', 1)->where('featured', $featured)->when($article_type_id, function ($query, $article_type_id) {
             return $query->where('article_type_id', $article_type_id);
-        })->orderBy('created_at', 'DESC')->paginate(5));
+        })->orderBy('created_at', 'DESC')->paginate($pageCount));
     }
 
     public function showFeaturedList(Request $request)

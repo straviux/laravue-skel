@@ -54,16 +54,16 @@ const route = useRoute();
 const router = useRouter();
 
 // console.log(route.params.slug);
-const currentNews = computed(() => store.state.currentNews.data);
-const currentNewsLoading = computed(() => store.state.currentNews.loading);
+const currentNews = computed(() => store.state.articles.current.data);
+const currentNewsLoading = computed(() => store.state.articles.current.loading);
 store
-  .dispatch("getNewsBySlug", route.params.slug)
+  .dispatch("articles/getSlug", route.params.slug)
   .then(({ data }) => {
     // add loader stop control here
   })
   .catch((err) => {
     // redirect to not found
-
+    console.log(err)
     router.push({ name: "NotFound" });
   });
 </script>

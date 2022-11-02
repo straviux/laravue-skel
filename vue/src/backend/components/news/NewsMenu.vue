@@ -12,7 +12,7 @@
             <a>NEWS MAINTENANCE</a>
           </li>
           <li>
-            <a class="uppercase">{{ route.meta.name }}</a>
+            <a class="uppercase">{{ route.meta.title }}</a>
           </li>
         </ul>
       </div>

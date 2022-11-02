@@ -14,7 +14,7 @@
       <div class="px-4 sm:px-0">
         <div class="max-w-7xl py-6 sm:px-6 lg:px-8">
           <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
-            <custom-list :rows="newslist.data">
+            <custom-list :rows="newslist.data" v-if="!newslist.loading">
               <template v-slot:list="data">
                 <router-link
                   :to="{
@@ -109,16 +109,25 @@
 import store from "../../store";
 import { computed, ref } from "vue";
 import CustomList from "../CustomList.vue";
-store.dispatch("getPublicNewsList");
+store.dispatch("articles/getPublicList", {
+  article_type_id: 1,
+  featured: 0,
+  pageCount: 2,
+});
 
-const newslist = computed(() => store.state.newsList);
+const newslist = computed(() => store.state.articles.list);
 
 const getForPage = (ev, link, page) => {
   ev.preventDefault();
   if (!link.url || link.active) {
     return;
   }
-  store.dispatch("getPublicNewsList", { url: link.url });
+  store.dispatch("articles/getPublicList", {
+    url: link.url,
+    article_type_id: 1,
+    featured: 0,
+    pageCount: 2,
+  });
 };
 </script>
 

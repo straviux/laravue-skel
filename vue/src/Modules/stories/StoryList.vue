@@ -14,12 +14,12 @@
       <div class="px-4 sm:px-0">
         <div class="max-w-7xl py-6 sm:px-6 lg:px-8">
           <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
-            <custom-list :rows="storylist.data">
+            <custom-list :rows="storylist.data" v-if="!storylist.loading">
               {{ storylist.data }}
               <template v-slot:list="data">
                 <router-link
                   :to="{
-                    name: 'ViewNews',
+                    name: 'ViewStory',
                     params: { slug: data.rowData.slug },
                   }"
                   class="card card-compact card-side hover:bg-blue-100 rounded-none px-4 border-b mb-4 py-3"
@@ -110,16 +110,25 @@
 import store from "../../store";
 import { computed } from "vue";
 import CustomList from "../CustomList.vue";
-store.dispatch("getPublicStoryList");
+store.dispatch("articles/getPublicList", {
+  article_type_id: 2,
+  featured: 0,
+  pageCount: 5,
+});
 
-const storylist = computed(() => store.state.storyList);
+const storylist = computed(() => store.state.articles.list);
 
 const getForPage = (ev, link, page) => {
   ev.preventDefault();
   if (!link.url || link.active) {
     return;
   }
-  store.dispatch("getPublicStoryList", { url: link.url });
+  store.dispatch("articles/getPublicList", {
+    url: link.url,
+    article_type_id: 2,
+    featured: 0,
+    pageCount: 5,
+  });
 };
 </script>
 
