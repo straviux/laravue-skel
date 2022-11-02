@@ -13,10 +13,10 @@
     </custom-table>
   </div> -->
   <section class="overflow-hidden text-gray-700">
-    <div class="container px-5 py-2 mx-auto lg:pt-12 lg:px-32">
-      <div class="flex flex-wrap -m-1 md:-m-2">
+    <div class="px-5 py-2 mx-auto lg:pt-12 lg:px-32">
+      <div class="flex flex-wrap -m-1 md:-m-2 gap-6">
         <div
-          class="flex flex-wrap w-1/3 bg-white rounded-lg"
+          class="flex flex-wrap w-1/4 bg-white rounded-lg"
           v-for="(row, index) in list.data"
           v-if="!list.loading"
         >

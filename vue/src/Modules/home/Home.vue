@@ -1,27 +1,21 @@
 <template>
   <main>
     <!-- Carousel -->
-    <Carousel
-      class="carousel h-80 lg:h-screen"
-      v-slot="currentSlide"
-      :pagination="true"
-      :navigation="true"
-      :start-auto-play="true"
-      :timeout="5000"
-    >
-      <CarouselSlide
-        v-for="(slide, index) in carouselSlide"
-        :key="index"
-        v-if="!slides.loading"
-      >
-        <div
-          v-show="currentSlide.currentSlide === index + 1"
-          class="slide-info"
-        >
-          <img :src="slide.slide_url" alt="carousel" />
-        </div>
-      </CarouselSlide>
-    </Carousel>
+
+    <carousel :autoplay="3000" :wrap-around="true" class="carousel">
+      <slide v-for="slide in slides.data" :key="slide">
+        <img
+          :src="slide.slide_url"
+          alt="carousel"
+          class="w-full h-full object-fill object-center"
+        />
+      </slide>
+
+      <template #addons>
+        <navigation />
+        <pagination class="absolute bottom-[1em] left-[50%]" />
+      </template>
+    </carousel>
     <!-- End Carousel -->
     <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
       <!-- Replace with your content -->
@@ -366,27 +360,13 @@
 </template>
 
 <script setup>
-import Carousel from "./Carousel.vue";
-import CarouselSlide from "./CarouselSlide.vue";
+import "vue3-carousel/dist/carousel.css";
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import CustomList from "../CustomList.vue";
 import store from "../../store";
 import { computed, ref } from "vue";
 const slides = computed(() => store.state.carousels.list);
 store.dispatch("carousels/getPublic");
-const carouselSlide = computed(() =>
-  store.state.carousels.list.data.map((value) => {
-    return value.slide_url;
-  })
-);
-// const carouselSlides = [
-//   "../../assets/img/1.jpg",
-//   "../../assets/img/3.jpg",
-//   "../../assets/img/5.jpg",
-// ];
-// const getImageUrl = (name) => {
-//   return new URL(`${name}`, import.meta.url).href;
-// };
-
 store.dispatch("articles/getPublicList", {
   featured: 1,
   pageCount: 5,
@@ -403,23 +383,24 @@ const getForPage = (ev, link, page, api) => {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .carousel {
   position: relative;
-  max-height: 70vh;
+  max-height: 75vh;
 }
-.slide-info {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  max-height: 100%;
-  height: 100%;
+.carousel__prev,
+.carousel__next {
+  color: #fff;
+  background-color: #27b84d;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.6);
+}
 
-  img {
-    min-width: 100%;
-    height: 100%;
-    object-fit: fit;
-  }
+.carousel__pagination-button::after {
+  background-color: #eee;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.6);
+  width: 38px;
+}
+.carousel__pagination-button--active::after {
+  background-color: #27b84d;
 }
 </style>
