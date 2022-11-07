@@ -36,9 +36,14 @@
         <h1 class="font-bold text-black">{{ user.name }}</h1>
         <a href="#" class="text-gray-500">{{ user.email }}</a>
       </div>
+      <div class="text-center -mt-2">
+        <button class="btn btn-link capitalize underline text-xs">
+          settings
+        </button>
+      </div>
     </div>
 
-    <div class="col-span-12 p-6" v-if="menuIsActive">
+    <div class="col-span-12 px-6" v-if="menuIsActive">
       <nav-bar-menu />
     </div>
   </div>
