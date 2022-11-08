@@ -57,7 +57,7 @@
     <div
       class="mx-auto pt-12 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-100 to-white"
     >
-      <div class="flex flex-wrap justify-center gap-4">
+      <div class="flex flex-wrap justify-center gap-6 mb-12">
         <div class="w-full mb-6">
           <h5 class="text-3xl text-gray-600 text-center">
             Featured Post
@@ -67,24 +67,26 @@
         <Carousel
           :autoplay="3000"
           :wrapAround="true"
-          :itemsToShow="3.5"
+          :itemsToShow="5"
           :transition="500"
           :breakpoints="{
+            1024: {
+              itemsToShow: 5,
+              snapAlign: 'center',
+            },
             700: {
-              itemsToShow: 3.5,
+              itemsToShow: 3,
               snapAlign: 'center',
             },
             360: {
-              itemsToShow: 1,
+              itemsToShow: 1.5,
               snapAlign: 'center',
             },
           }"
           v-if="featuredList.data.length"
         >
           <slide v-for="(row, i) in featuredList.data" :key="i"
-            ><div
-              class="carousel__item card card-compact w-96 bg-base-50 shadow my-2"
-            >
+            ><div class="card card-compact w-96 bg-base-50 shadow my-4 mx-2">
               <router-link
                 :to="{
                   name: 'ViewNews',
@@ -105,33 +107,6 @@
             </div></slide
           >
         </Carousel>
-        <div class="w-full flex justify-center py-12 bg-transparent">
-          <nav
-            class="relative z-0 inline-flex items-center justify-center rounded-md shadow-sm -space-x-px"
-            aria-label="Pagination"
-          >
-            <a
-              v-for="(link, i) of featuredList.links"
-              :key="i"
-              :disabled="!link.url"
-              href="#"
-              @click="getForPage($event, link, i + 1, 'getFeaturedList')"
-              aria-current="page"
-              class="relative inline-flex items-center px-4 py-2 border text-xs font-medium whitespace-nowrap hover:bg-slate-400 hover:border-slate-400 hover:text-slate-50"
-              :class="[
-                link.active
-                  ? 'z-10 bg-slate-400 border-slate-400 text-slate-50'
-                  : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
-                i === 0
-                  ? 'rounded-l-md bg-gray-100 hover:bg-gray-100 hover:border-gray-300 hover:text-gray-500'
-                  : '',
-                i === featuredList.links.length - 1 ? 'rounded-r-md' : '',
-              ]"
-              v-html="link.label"
-            >
-            </a>
-          </nav>
-        </div>
       </div>
     </div>
 
@@ -247,7 +222,6 @@ const slides = computed(() => store.state.carousels.list);
 store.dispatch("carousels/getPublic");
 store.dispatch("articles/getPublicList", {
   featured: 1,
-  pageCount: 5,
 });
 store.dispatch("getLatestList");
 const featuredList = computed(() => store.state.articles.list);
@@ -257,6 +231,7 @@ const getForPage = (ev, link, page, api) => {
   if (!link.url || link.active) {
     return;
   }
+
   store.dispatch(api, { url: link.url });
 };
 
