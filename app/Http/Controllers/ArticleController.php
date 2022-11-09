@@ -43,9 +43,7 @@ class ArticleController extends Controller
         $search_headline = $request['search'];
 
         return ArticleResource::collection(Article::where('article_type_id', $article_type_id)
-            ->when($is_featured, function ($query, $is_featured) {
-                return $query->where('featured', $is_featured);
-            })->when($status, function ($query, $status) {
+            ->where('featured', $is_featured)->when($status, function ($query, $status) {
                 if ($status !== "all") {
                     $is_active = $status === "active" ? 1 : 0;
                     return $query->where('status', $is_active);
