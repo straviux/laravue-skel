@@ -15,7 +15,12 @@ const store = createStore(
       data: {}
       },
 
-      latestList: {
+      latestNews: {
+        loading: false,
+        links: [],
+        data: []
+      },
+      latestStory: {
         loading: false,
         links: [],
         data: []
@@ -67,10 +72,18 @@ const store = createStore(
         return axiosClient
         .get(url, {params:{article_type_id:article_type_id, pageCount:5, featured:0}})
         .then((res)=>{
-          commit("setList",res.data);
-          commit("setListLoading", false);
-          console.log(res)
-          return res;
+
+          if(article_type_id==1) {
+            commit("setNewsList",res.data);
+            commit("setListLoading", false);
+            console.log(res)
+            return res;
+          } else if (article_type_id==2) {
+            commit("setStoryList",res.data);
+            commit("setListLoading", false);
+            console.log(res)
+            return res;
+          }
         })
         .catch((err)=>{
           commit("setListLoading", false);
@@ -81,11 +94,16 @@ const store = createStore(
     },
     mutations: {
       setListLoading: (state, loading) => {
-        state.latestList.loading = loading;
+        state.latestNews.loading = loading;
       },
-      setList: (state, article)=>{
-        state.latestList.data = article.data;
-        state.latestList.links = article.meta.links;
+      setNewsList: (state, article)=>{
+        state.latestNews.data = article.data;
+        state.latestNews.links = article.meta.links;
+      },
+
+      setStoryList: (state, article)=>{
+        state.latestStory.data = article.data;
+        state.latestStory.links = article.meta.links;
       },
 
       logout: (state) => {

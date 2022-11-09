@@ -3,7 +3,7 @@ const NewsList = () => import("./NewsList.vue");
 const newsRoutes =[ {
           path: ":pagenum?",
           component: NewsList,
-          name: "PublicNewsList",
+          name: "PublicNews",
         },
         {
           path: ":slug",

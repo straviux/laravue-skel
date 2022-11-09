@@ -3,7 +3,7 @@
     <div class="mx-auto max-w-7xl py-4 px-4 sm:px-6 lg:px-8">
       <div class="text-sm breadcrumbs">
         <ul>
-          <li class="uppercase"><router-link :to="{name:'PublicStoryList'}">Story</router-link></li>
+          <li class="uppercase"><router-link :to="{name:'PublicStory'}">Story</router-link></li>
           <li class="uppercase">
             <a href="#">{{ currentStory.headline }}</a>
           </li>

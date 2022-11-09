@@ -3,8 +3,13 @@ const DefaultLayout = () => import("./DefaultLayout.vue");
 import Home from "./home/Home.vue";
 import News from "./news/News.vue";
 import Stories from "./stories/Story.vue";
+import Events from "./events/Events.vue";
+import Gallery from "./gallery/Gallery.vue";
 import newsRoutes from "./news/news-routes";
 import storyRoutes from "./stories/story-routes";
+import eventsRoutes from "./events/events-routes";
+import galleryRoutes from "./gallery/gallery-routes";
+
 import NotFound from "../views/NotFound.vue";
 
 const routes = {
@@ -23,7 +28,7 @@ const routes = {
       // newsRoutes
       {
         path: "news",
-        redirect: {name:"PublicNewsList"}, //imported from from new-routes
+        redirect: {name:"PublicNews"}, //imported from from new-routes
         component: News,
         name: "NewsModule",
         meta: {title:'News'},
@@ -34,7 +39,7 @@ const routes = {
       // newsRoutes
       {
         path: "stories",
-        redirect: {name:"PublicStoryList"}, //imported from from story-routes
+        redirect: {name:"PublicStory"}, //imported from from story-routes
         component: Stories,
         name: "StoryModule",
         meta: {title:'Stories'},
@@ -43,9 +48,18 @@ const routes = {
 
       {
         path: "events",
-        component: Home,
-        name: "PublicEventsList",
+        component: Events,
+        name: "PublicEvents",
         meta: {title:'Events'},
+        children: eventsRoutes
+      },
+
+      {
+        path: "gallery",
+        component: Gallery,
+        name: "PublicGallery",
+        meta: {title:'Gallery'},
+         children: galleryRoutes
       },
 
 

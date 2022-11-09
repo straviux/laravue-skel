@@ -47,8 +47,11 @@ module.exports = {
   plugins: [
     require('@tailwindcss/typography'),
     require("daisyui"),
-    require('@tailwindcss/line-clamp'),
+    require('@tailwindcss/line-clamp')
   ],
+  variants: {
+    lineClamp: ['responsive', 'hover']
+  },
   daisyui: {
     styled: true,
     themes: true,

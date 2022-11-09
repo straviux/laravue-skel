@@ -103,8 +103,13 @@
                     alt="Shoes"
                   />
                 </figure>
-                <div class="card-body h-32">
-                  <h2 class="card-title text-normal">{{ row.headline }}</h2>
+                <div class="card-body">
+                  <h2 class="card-title text-normal line-clamp-2">
+                    {{ row.headline }}
+                  </h2>
+                  <p class="line-clamp-3">
+                    {{ row.excerpt }}
+                  </p>
                 </div>
               </router-link>
             </div></slide
@@ -119,84 +124,100 @@
       <div class="flex flex-wrap justify-center gap-4">
         <div class="w-full mb-6">
           <h5 class="text-3xl text-gray-600 text-center">
-            Latest Post
+            Latest Updates
             <div class="border-b-2 w-[6rem] mx-auto mt-4 border-gray-400"></div>
           </h5>
         </div>
-        <section
-          class="col-span-2 h-fit font-bold tracking-tight bg-white rounded-xl shadow-md px-4 py-3 max-w-7xl"
-        >
-          <custom-list :rows="latestlist.data">
-            <template v-slot:list="data">
-              <router-link
-                :to="{
-                  name:
-                    data.rowData.article_type_id == 1
-                      ? 'ViewNews'
-                      : data.rowData.article_type_id == 2
-                      ? 'ViewStory'
-                      : 'NotFound',
-                  params: { slug: data.rowData.slug },
-                }"
-                class="card card-compact card-side hover:bg-blue-100 rounded-none px-4 border-b mb-4 py-3"
-              >
-                <figure>
-                  <img
-                    class="object-cover h-48 w-48"
-                    alt="Cover Photo"
-                    :src="data.rowData.cover_photo_url"
-                  />
-                </figure>
-                <div class="card-body">
-                  <h5 class="mb-2 md:text-xl text-gray-700">
-                    {{ data.rowData.headline }}
-                  </h5>
-                  <p class="font-normal text-gray-700 hidden md:block">
-                    {{ data.rowData.excerpt }}
-                  </p>
-                  <div class="card-actions lg:justify-end pt-8 tags py-3">
-                    <div
-                      class="badge badge-ghost py-3 text-gray-500 font-semibold"
-                    >
+        <div class="lg:flex mb-4 gap-2">
+          <section class="col-span-1 px-4 py-3 w-full lg:w-1/2 text-right">
+            <h6 class="text-2xl text-gray-600 mb-4 text-left">News</h6>
+            <custom-list :rows="latestNews.data">
+              <template v-slot:list="data">
+                <router-link
+                  :to="{
+                    name:
+                      data.rowData.article_type_id == 1
+                        ? 'ViewNews'
+                        : data.rowData.article_type_id == 2
+                        ? 'ViewStory'
+                        : 'NotFound',
+                    params: { slug: data.rowData.slug },
+                  }"
+                  class="card card-compact card-side hover:ring hover:ring-gray-400 shadow-sm rounded-lg px-4 mb-4 pb-4 items-start pt-4 bg-base-100 hover:bg-white transition-all ease-in duration-300 text-left"
+                >
+                  <figure>
+                    <img
+                      class="object-cover h-40 md:h-52 w-40 md:w-52"
+                      alt="Cover Photo"
+                      :src="data.rowData.cover_photo_url"
+                    />
+                  </figure>
+                  <div class="card-body">
+                    <h5 class="text-normal card-title -mt-5">
+                      {{ data.rowData.headline }}
+                    </h5>
+                    <div class="flex text-gray-500 font-semibold">
                       <mdicon name="calendar" size="18" class="mr-1" />
                       {{ $filters.moment(data.rowData.created_at, "ll") }}
                     </div>
+                    <p class="text-gray-700 line-clamp-4">
+                      {{ data.rowData.excerpt }}
+                    </p>
                   </div>
-                </div>
-              </router-link>
-            </template>
-
-            <template v-slot:pagination>
-              <div class="flex justify-center mt-5 pb-5">
-                <nav
-                  class="relative z-0 inline-flex items-center justify-center rounded-md shadow-sm -space-x-px"
-                  aria-label="Pagination"
+                </router-link>
+              </template>
+            </custom-list>
+            <router-link :to="{ name: 'PublicNews' }" class="btn"
+              >More</router-link
+            >
+          </section>
+          <section class="col-span-1 px-4 py-3 w-full lg:w-1/2 text-right">
+            <h6 class="text-2xl text-gray-600 mb-4 text-left">Stories</h6>
+            <custom-list :rows="latestStory.data">
+              <template v-slot:list="data">
+                <router-link
+                  :to="{
+                    name:
+                      data.rowData.article_type_id == 1
+                        ? 'ViewNews'
+                        : data.rowData.article_type_id == 2
+                        ? 'ViewStory'
+                        : 'NotFound',
+                    params: { slug: data.rowData.slug },
+                  }"
+                  class="card card-compact card-side hover:ring hover:ring-gray-400 shadow-sm rounded-lg px-4 mb-4 pb-4 items-start pt-4 bg-base-100 hover:bg-white transition-all ease-in duration-300 text-left"
                 >
-                  <a
-                    v-for="(link, i) of latestlist.links"
-                    :key="i"
-                    :disabled="!link.url"
-                    href="#"
-                    @click="getForPage($event, link, i + 1, 'getLatestList')"
-                    aria-current="page"
-                    class="relative inline-flex items-center px-4 py-2 border text-xs font-medium whitespace-nowrap hover:bg-slate-400 hover:border-slate-400 hover:text-slate-50"
-                    :class="[
-                      link.active
-                        ? 'z-10 bg-slate-400 border-slate-400 text-slate-50'
-                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
-                      i === 0
-                        ? 'rounded-l-md bg-gray-100 hover:bg-gray-100 hover:border-gray-300 hover:text-gray-500'
-                        : '',
-                      i === latestlist.links.length - 1 ? 'rounded-r-md' : '',
-                    ]"
-                    v-html="link.label"
-                  >
-                  </a>
-                </nav>
-              </div>
-            </template>
-          </custom-list>
-        </section>
+                  <figure>
+                    <img
+                      class="object-cover h-48 w-48"
+                      alt="Cover Photo"
+                      :src="data.rowData.cover_photo_url"
+                    />
+                  </figure>
+                  <div class="card-body">
+                    <h5 class="mb-2 md:text-xl text-gray-700">
+                      {{ data.rowData.headline }}
+                    </h5>
+                    <p class="font-normal text-gray-700 hidden md:block">
+                      {{ data.rowData.excerpt }}
+                    </p>
+                    <div class="card-actions lg:justify-end pt-8 tags py-3">
+                      <div
+                        class="badge badge-ghost py-3 text-gray-500 font-semibold"
+                      >
+                        <mdicon name="calendar" size="18" class="mr-1" />
+                        {{ $filters.moment(data.rowData.created_at, "ll") }}
+                      </div>
+                    </div>
+                  </div>
+                </router-link>
+              </template>
+            </custom-list>
+            <router-link :to="{ name: 'PublicStory' }" class="btn"
+              >More</router-link
+            >
+          </section>
+        </div>
       </div>
     </div>
     <!-- <div
@@ -226,9 +247,11 @@ store.dispatch("carousels/getPublic");
 store.dispatch("articles/getPublicList", {
   featured: 1,
 });
-store.dispatch("getLatestList");
+store.dispatch("getLatestList", { article_type_id: 1 });
+store.dispatch("getLatestList", { article_type_id: 2 });
 const featuredList = computed(() => store.state.articles.list);
-const latestlist = computed(() => store.state.latestList);
+const latestNews = computed(() => store.state.latestNews);
+const latestStory = computed(() => store.state.latestStory);
 const getForPage = (ev, link, page, api) => {
   ev.preventDefault();
   if (!link.url || link.active) {
@@ -237,8 +260,6 @@ const getForPage = (ev, link, page, api) => {
 
   store.dispatch(api, { url: link.url });
 };
-
-const featuredListCarousel = ref(null);
 </script>
 
 <style lang="scss">

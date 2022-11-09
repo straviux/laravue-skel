@@ -74,7 +74,7 @@
                     class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8"
                   >
                     <a
-                      v-for="item in solutions"
+                      v-for="item in assistance"
                       :key="item.name"
                       :href="item.href"
                       class="-m-3 flex items-start rounded-lg p-3 hover:bg-gray-50"
@@ -99,24 +99,10 @@
             </transition>
           </Popover>
           <router-link
-            :to="'/'"
+            v-for="link in links"
+            :to="link.to"
             class="text-base font-medium text-gray-500 hover:text-gray-900"
-            >Home</router-link
-          >
-          <router-link
-            :to="{ name: 'PublicNewsList' }"
-            class="text-base font-medium text-gray-500 hover:text-gray-900"
-            >News</router-link
-          >
-          <router-link
-            :to="{ name: 'PublicStoryList' }"
-            class="text-base font-medium text-gray-500 hover:text-gray-900"
-            >Stories</router-link
-          >
-          <router-link
-            :to="{ name: 'PublicEventsList' }"
-            class="text-base font-medium text-gray-500 hover:text-gray-900"
-            >Events</router-link
+            >{{ link.text }}</router-link
           >
 
           <Popover class="relative" v-slot="{ open }">
@@ -230,7 +216,7 @@
             <div class="mt-6">
               <nav class="grid gap-y-8">
                 <a
-                  v-for="item in solutions"
+                  v-for="item in assistance"
                   :key="item.name"
                   :href="item.href"
                   class="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
@@ -250,25 +236,12 @@
           <div class="space-y-6 py-6 px-5">
             <div class="grid grid-cols-2 gap-y-4 gap-x-8">
               <router-link
-                :to="'/'"
+                v-for="link in links"
+                :to="link.to"
                 class="text-base font-medium text-gray-800 hover:text-gray-900"
-                >Home</router-link
+                >{{ link.text }}</router-link
               >
-              <router-link
-                :to="{ name: 'PublicNewsList' }"
-                class="text-base font-medium text-gray-800 hover:text-gray-900"
-                >News</router-link
-              >
-              <router-link
-                :to="'articles'"
-                class="text-base font-medium text-gray-800 hover:text-gray-900"
-                >Articles</router-link
-              >
-              <router-link
-                :to="'gallery'"
-                class="text-base font-medium text-gray-800 hover:text-gray-900"
-                >Gallery</router-link
-              >
+
               <a
                 v-for="item in resources"
                 :key="item.name"
@@ -276,15 +249,6 @@
                 class="text-base font-medium text-gray-800 hover:text-gray-700"
                 >{{ item.name }}</a
               >
-            </div>
-            <div>
-              <p class="mt-6 text-center text-base font-medium text-gray-500">
-                Existing user?
-                {{ " " }}
-                <a href="#" class="text-indigo-600 hover:text-indigo-500"
-                  >Sign in</a
-                >
-              </p>
             </div>
           </div>
         </div>
@@ -339,7 +303,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import {
   Popover,
   PopoverButton,
@@ -357,7 +320,7 @@ import {
   XMarkIcon,
 } from "@heroicons/vue/24/outline";
 import { ChevronDownIcon } from "@heroicons/vue/20/solid";
-const solutions = [
+const assistance = [
   {
     name: "Financial Assitance",
     description: "Apply for financial assistance that you might need.",
@@ -379,12 +342,6 @@ const solutions = [
 ];
 
 const resources = [
-  // {
-  //   name: "Events",
-  //   description: "See what events we might be planning near you.",
-  //   href: "#",
-  //   icon: CalendarIcon,
-  // },
   {
     name: "Frequently Ask Questions",
     description:
@@ -398,12 +355,23 @@ const resources = [
     href: "#",
     icon: ShieldCheckIcon,
   },
+  {
+    name: "Contact Us",
+    description: "Any suggestions or feedbacks? feel free to contact us.",
+    href: "#",
+    icon: PhoneIcon,
+  },
+];
+
+const links = [
+  { text: "Home", to: { name: "Home" } },
+  { text: "News", to: { name: "PublicNews" } },
+  { text: "Stories", to: { name: "PublicStory" } },
+  { text: "Events", to: { name: "PublicEvents" } },
+  { text: "Gallery", to: { name: "PublicGallery" } },
 ];
 
 export default {
-  computed: {
-    ...mapState(["user"]),
-  },
   components: {
     Popover,
     PopoverButton,
@@ -422,7 +390,8 @@ export default {
   setup() {
     return {
       resources,
-      solutions,
+      assistance,
+      links,
     };
   },
 };

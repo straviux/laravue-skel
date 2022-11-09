@@ -3,7 +3,7 @@ const StoryList = () => import("./StoryList.vue");
 const storyRoutes =[ {
           path: ":pagenum?",
           component: StoryList,
-          name: "PublicStoryList",
+          name: "PublicStory",
         },
         {
           path: ":slug",
