@@ -2,13 +2,15 @@
   <main>
     <!-- Carousel -->
 
-    <carousel
+    <Carousel
       :wrapAround="true"
       :autoplay="4000"
       :transition="500"
+      :key="slides.data.length"
+      v-if="slides.data.length"
       class="carousel"
     >
-      <slide v-for="slide in slides.data" :key="slide">
+      <slide v-for="slide in slides.data" :key="slide.id">
         <img
           :src="slide.slide_url"
           alt="carousel"
@@ -20,7 +22,7 @@
         <navigation />
         <pagination class="absolute bottom-[1rem] left-0 right-0 mx-auto" />
       </template>
-    </carousel>
+    </Carousel>
     <!-- End Carousel -->
     <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
       <!-- Replace with your content -->
@@ -70,7 +72,7 @@
           :itemsToShow="5"
           :transition="500"
           :breakpoints="{
-            1024: {
+            1490: {
               itemsToShow: 5,
               snapAlign: 'center',
             },
@@ -84,8 +86,9 @@
             },
           }"
           v-if="featuredList.data.length"
+          :key="featuredList.data.length"
         >
-          <slide v-for="(row, i) in featuredList.data" :key="i"
+          <slide v-for="(row, i) in featuredList.data" :key="row.id"
             ><div class="card card-compact w-96 bg-base-50 shadow my-4 mx-2">
               <router-link
                 :to="{
