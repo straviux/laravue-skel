@@ -164,6 +164,12 @@ const headers = [
     rowClass: "text-[14px] text-slate-600",
     sortDirection: "ascending",
   },
+  {
+    key: "featured",
+    label: "featured",
+    rowClass: "text-[14px] text-slate-600",
+    sortDirection: "ascending",
+  },
 ];
 
 const model = ref({ pageCount: 5, featured: false, status: "all", search: "" });

@@ -12,7 +12,12 @@
             <div
               class="flex items-center gap-2 cursor-pointer hover:drop-shadow"
               @click="
-                sortData({ key: header.key, direction: header.sortDirection })
+                header.label !== 'status' && header.label !== 'featured'
+                  ? sortData({
+                      key: header.key,
+                      direction: header.sortDirection,
+                    })
+                  : ''
               "
             >
               <p
@@ -20,7 +25,7 @@
                 class="text-gray-500 text-[16px] font-semibold"
               ></p>
               <mdicon
-                v-if="header.label !== 'status'"
+                v-if="header.label !== 'status' && header.label !== 'featured'"
                 :name="
                   header.sortDirection == 'ascending'
                     ? 'sort-ascending'
@@ -57,9 +62,19 @@
             <span
               v-if="header.key === 'status'"
               :class="data[header.key] ? 'text-emerald-500' : 'text-red-500'"
-              class="font-semibold"
+              class="font-semibold text-xs"
               >{{ data[header.key] ? "active" : "inactive" }}</span
             >
+            <span
+              v-else-if="header.key === 'featured'"
+              :class="data[header.key] ? 'text-purple-500' : 'text-red-500'"
+              class="font-semibold text-xs"
+              >{{ data[header.key] ? "yes" : "no" }}</span
+            >
+            <span v-else>
+              {{ isDate(data[header.key]) || data[header.key] }}</span
+            >
+
             <span v-else>
               {{ isDate(data[header.key]) || data[header.key] }}</span
             >

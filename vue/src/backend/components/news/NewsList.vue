@@ -151,13 +151,7 @@ const headers = [
       "text-[16px] text-slate-600 max-w-[350px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
     headerClass: "text-[20px]",
   },
-  // {
-  //   key: "slug",
-  //   label: "Link",
-  //   sortDirection: "ascending",
-  //   rowClass:
-  //     "text-[14px] text-slate-600 italic max-w-[200px] truncate hover:overflow-visible hover:whitespace-normal cursor-pointer ",
-  // },
+
   {
     key: "posted_at",
     label: "date publish",
@@ -169,6 +163,12 @@ const headers = [
     label: "status",
     rowClass: "text-[14px] text-slate-600",
     sortDirection: "ascending",
+  },
+  {
+    key: "featured",
+    label: "featured",
+    sortDirection: "ascending",
+    rowClass: "text-[14px] text-slate-600",
   },
 ];
 
