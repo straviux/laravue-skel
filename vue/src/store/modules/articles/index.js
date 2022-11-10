@@ -13,6 +13,12 @@ export default {
           links: [],
           data: []
         },
+        featured: {
+          loading: false,
+          links: [],
+          data: []
+        },
+
 
       }
   },

@@ -189,26 +189,22 @@
                 >
                   <figure>
                     <img
-                      class="object-cover h-48 w-48"
+                      class="object-cover h-40 md:h-52 w-40 md:w-52"
                       alt="Cover Photo"
                       :src="data.rowData.cover_photo_url"
                     />
                   </figure>
                   <div class="card-body">
-                    <h5 class="mb-2 md:text-xl text-gray-700">
+                    <h5 class="text-normal card-title -mt-5">
                       {{ data.rowData.headline }}
                     </h5>
-                    <p class="font-normal text-gray-700 hidden md:block">
+                    <div class="flex text-gray-500 font-semibold">
+                      <mdicon name="calendar" size="18" class="mr-1" />
+                      {{ $filters.moment(data.rowData.created_at, "ll") }}
+                    </div>
+                    <p class="text-gray-700 line-clamp-4">
                       {{ data.rowData.excerpt }}
                     </p>
-                    <div class="card-actions lg:justify-end pt-8 tags py-3">
-                      <div
-                        class="badge badge-ghost py-3 text-gray-500 font-semibold"
-                      >
-                        <mdicon name="calendar" size="18" class="mr-1" />
-                        {{ $filters.moment(data.rowData.created_at, "ll") }}
-                      </div>
-                    </div>
                   </div>
                 </router-link>
               </template>
@@ -249,7 +245,7 @@ store.dispatch("articles/getPublicList", {
 });
 store.dispatch("getLatestList", { article_type_id: 1 });
 store.dispatch("getLatestList", { article_type_id: 2 });
-const featuredList = computed(() => store.state.articles.list);
+const featuredList = computed(() => store.state.articles.featured);
 const latestNews = computed(() => store.state.latestNews);
 const latestStory = computed(() => store.state.latestStory);
 const getForPage = (ev, link, page, api) => {

@@ -15,6 +15,14 @@ const mutations =  {
     SET_LIST_LOADING: (state, loading) => {
         state.list.loading = loading;
     },
+     SET_FEATURED: (state, article)=>{
+      state.featured.data = article.data;
+      state.featured.links = article.meta.links;
+    },
+     SET_FEATURED_LOADING: (state, loading) => {
+        state.list.loading = loading;
+    },
+
   }
 
  export default mutations;

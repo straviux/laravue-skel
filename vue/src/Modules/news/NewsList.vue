@@ -1,106 +1,133 @@
 <template>
-  <header class="bg-white shadow">
-    <div class="mx-auto max-w-7xl py-4 px-4 sm:px-6 lg:px-8">
-      <div class="text-sm breadcrumbs">
-        <ul>
-          <li><a>News</a></li>
-          <li><a>Latest</a></li>
-        </ul>
-      </div>
+  <div
+    class="flex justify-center text-center py-16 bg-no-repeat bg-cover bg-center relative"
+    id="bg-banner"
+  >
+    <div
+      class="absolute bg-gradient-to-b from-cyan-200 to-blue-200 opacity-75 inset-0 z-0"
+    ></div>
+    <div class="w-full z-10">
+      <h5
+        class="text-3xl text-gray-500 font-semibold text-center uppercase drop-shadow-lg"
+      >
+        News List
+        <div
+          class="border-b-4 w-[6rem] mx-auto mt-4 border-gray-500 drop-shadow-lg"
+        ></div>
+      </h5>
     </div>
-  </header>
+  </div>
   <main>
     <div class="mx-auto max-w-7xl py-4 sm:px-6 lg:px-8">
-      <div class="px-4 sm:px-0">
-        <div class="max-w-7xl py-6 sm:px-6 lg:px-8">
-          <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-6">
-            <custom-list :rows="newslist.data" v-if="!newslist.loading">
-              <template v-slot:list="data">
-                <router-link
-                  :to="{
-                    name: 'ViewNews',
-                    params: { slug: data.rowData.slug },
-                  }"
-                  class="card card-compact card-side hover:bg-blue-100 rounded-none px-4 border-b mb-4 py-3"
-                >
-                  <figure class="bg-gray-600">
-                    <img
-                      class="h-40 w-40"
-                      alt="Cover Photo"
-                      :src="data.rowData.cover_photo_url"
-                    />
-                  </figure>
-                  <div class="card-body">
-                    <h5 class="mb-2 md:text-xl text-gray-700">
-                      {{ data.rowData.headline }}
-                    </h5>
-                    <p class="font-normal text-gray-700 hidden md:block">
-                      {{ data.rowData.excerpt }}
-                    </p>
-                    <div class="card-actions lg:justify-end pt-8 tags py-3">
-                      <!-- <div class="badge badge-ghost py-3">
-                        <mdicon
-                          name="tag-heart-outline"
-                          size="18"
-                          class="mr-1"
-                        />
-                        Provincial News
-                      </div> -->
-                      <div
-                        class="badge badge-ghost py-3 text-gray-500 font-semibold"
-                      >
-                        <mdicon name="calendar" size="18" class="mr-1" />
-                        {{ $filters.moment(data.rowData.posted_at, "ll") }}
-                      </div>
-                      <!-- <div class="badge badge-ghost py-3">
-                        <mdicon
-                          name="comment-account-outline"
-                          size="18"
-                          class="mr-1"
-                        />
-                        Arcee Heredero
-                      </div> -->
-                    </div>
-                  </div>
-                </router-link>
-              </template>
-
-              <template v-slot:pagination>
-                <div class="flex justify-center mt-5 pb-5">
-                  <nav
-                    class="relative z-0 inline-flex items-center justify-center rounded-md shadow-sm -space-x-px"
-                    aria-label="Pagination"
+      <div class="flex flex-wrap gap-6 mb-12">
+        <Carousel
+          :autoplay="3000"
+          :wrapAround="true"
+          :itemsToShow="4.5"
+          :transition="500"
+          :breakpoints="{
+            1490: {
+              itemsToShow: 5,
+              snapAlign: 'center',
+            },
+            700: {
+              itemsToShow: 3,
+              snapAlign: 'center',
+            },
+            360: {
+              itemsToShow: 1.5,
+              snapAlign: 'center',
+            },
+          }"
+          v-if="featuredList.data.length"
+          :key="featuredList.data.length"
+        >
+          <slide v-for="(row, i) in featuredList.data" :key="row.id"
+            ><div
+              class="card card-compact w-96 bg-base-50 shadow my-4 mx-2 hover:ring hover:ring-gray-400 hover:bg-white transition-all ease-in duration-300 text-left"
+            >
+              <router-link
+                :to="{
+                  name: 'ViewNews',
+                  params: { slug: row.slug },
+                }"
+              >
+                <figure>
+                  <img
+                    :src="row.cover_photo_url"
+                    class="object-fill h-48 w-96"
+                    alt="Shoes"
+                  />
+                </figure>
+                <div class="card-body">
+                  <h2 class="card-title text-normal line-clamp-2">
+                    {{ row.headline }}
+                  </h2>
+                  <div
+                    class="flex text-gray-500 font-semibold text-[12px] items-center"
                   >
-                    <a
-                      v-for="(link, i) of newslist.links"
-                      :key="i"
-                      :disabled="!link.url"
-                      href="#"
-                      @click="getForPage($event, link, i + 1)"
-                      aria-current="page"
-                      class="relative inline-flex items-center px-4 py-2 border text-xs font-medium whitespace-nowrap hover:bg-slate-400 hover:border-slate-400 hover:text-slate-50"
-                      :class="[
-                        link.active
-                          ? 'z-10 bg-slate-400 border-slate-400 text-slate-50'
-                          : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50',
-                        i === 0
-                          ? 'rounded-l-md bg-gray-100 hover:bg-gray-100 hover:border-gray-300 hover:text-gray-500'
-                          : '',
-                        i === newslist.links.length - 1 ? 'rounded-r-md' : '',
-                      ]"
-                      v-html="link.label"
-                    >
-                    </a>
-                  </nav>
+                    <mdicon name="calendar" size="12" class="mr-1" />
+                    {{ $filters.moment(row.created_at, "ll") }}
+                  </div>
+                  <p class="line-clamp-3">
+                    {{ row.excerpt }}
+                  </p>
                 </div>
-              </template>
-            </custom-list>
-          </div>
-        </div>
+              </router-link>
+            </div></slide
+          >
+        </Carousel>
       </div>
-      <!-- /End replace -->
+    </div>
+    <div class="mx-auto max-w-7xl py-4 sm:px-6 lg:px-8">
+      <section class="px-4 py-3 w-full text-right">
+        <h6 class="text-2xl text-gray-600 mb-4 text-left">Latest</h6>
+        <custom-list :rows="newslist.data">
+          <template v-slot:list="data">
+            <router-link
+              :to="{
+                name:
+                  data.rowData.article_type_id == 1
+                    ? 'ViewNews'
+                    : data.rowData.article_type_id == 2
+                    ? 'ViewStory'
+                    : 'NotFound',
+                params: { slug: data.rowData.slug },
+              }"
+              class="card card-compact card-side hover:ring hover:ring-gray-400 shadow-sm rounded-lg px-4 mb-4 pb-4 items-start pt-4 bg-base-100 hover:bg-white transition-all ease-in duration-300 text-left"
+            >
+              <figure>
+                <img
+                  class="object-cover h-36 w-36"
+                  alt="Cover Photo"
+                  :src="data.rowData.cover_photo_url"
+                />
+              </figure>
+              <div class="card-body">
+                <h5 class="text-normal card-title -mt-5">
+                  {{ data.rowData.headline }}
+                </h5>
+                <div class="flex text-gray-500 font-semibold">
+                  <mdicon name="calendar" size="18" class="mr-1" />
+                  {{ $filters.moment(data.rowData.created_at, "ll") }}
+                </div>
+                <p class="text-gray-700 line-clamp-4">
+                  {{ data.rowData.excerpt }}
+                </p>
+              </div>
+            </router-link>
+          </template>
+        </custom-list>
 
-      <!-- <pre>{{ newsLinks }}</pre> -->
+        <!-- <button
+          @click="
+            getForPage({ link: newslist.links[newslist.links.length - 1].url })
+          "
+          class="btn btn-block rounded"
+        >
+          Load More
+        </button> -->
+      </section>
     </div>
   </main>
 </template>
@@ -108,30 +135,40 @@
 <script setup>
 import store from "../../store";
 import { computed, ref } from "vue";
+import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import CustomList from "../CustomList.vue";
+const featuredList = computed(() => store.state.articles.featured);
+
+store.dispatch("articles/getPublicList", {
+  article_type_id: 1,
+  featured: 1,
+});
 store.dispatch("articles/getPublicList", {
   article_type_id: 1,
   featured: 0,
-  pageCount: 2,
+  pageCount: 5,
 });
 
-const newslist = computed(() => store.state.articles.list);
+const newslist = ref(store.state.articles.list);
 
-const getForPage = (ev, link, page) => {
-  ev.preventDefault();
-  if (!link.url || link.active) {
-    return;
-  }
-  store.dispatch("articles/getPublicList", {
-    url: link.url,
-    article_type_id: 1,
-    featured: 0,
-    pageCount: 2,
-  });
-};
+// const getForPage = ({ link = null }) => {
+//   console.log(link);
+
+//   store.dispatch("articles/getPublicList", {
+//     url: link,
+//     article_type_id: 1,
+//     featured: 0,
+//     pageCount: 5,
+//   });
+//   let newList = JSON.parse(JSON.stringify(store.state.articles.list));
+//   newslist.value = newList;
+// };
 </script>
 
 <style scoped>
+#bg-banner {
+  background-image: url("../../assets/img/newsbanner.png");
+}
 .tags {
   margin: 12px 0 4px 0;
   padding: 0;

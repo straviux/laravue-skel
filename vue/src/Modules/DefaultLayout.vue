@@ -343,7 +343,7 @@ const assistance = [
 
 const resources = [
   {
-    name: "Frequently Ask Questions",
+    name: "Frequently Asked Questions",
     description:
       "Get all of your questions answered in our forums or contact support.",
     href: "#",

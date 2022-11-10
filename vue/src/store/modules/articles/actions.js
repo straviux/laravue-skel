@@ -54,8 +54,13 @@ const actions = {
     return axiosClient
       .get(url,{params:{article_type_id:article_type_id,pageCount:pageCount,featured:featured,search:search}})
       .then((res)=>{
-        commit("SET_LIST",res.data);
-        commit("SET_LIST_LOADING", false);
+        if(featured==1){
+          commit("SET_FEATURED",res.data);
+          commit("SET_FEATURED_LOADING", false)
+        } else {
+          commit("SET_LIST",res.data);
+          commit("SET_LIST_LOADING", false);
+        }
         console.log(res.data)
         return res;
       })
