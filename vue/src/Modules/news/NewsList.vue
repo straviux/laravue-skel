@@ -8,7 +8,7 @@
     ></div>
     <div class="w-full z-10">
       <h5
-        class="text-3xl text-gray-500 font-semibold text-center uppercase drop-shadow-lg"
+        class="text-4xl text-gray-500 font-bold text-center uppercase drop-shadow-lg"
       >
         News List
         <div
