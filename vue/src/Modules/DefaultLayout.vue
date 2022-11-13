@@ -367,7 +367,7 @@ const links = [
   { text: "Home", to: { name: "Home" } },
   { text: "News", to: { name: "PublicNews" } },
   { text: "Stories", to: { name: "PublicStory" } },
-  { text: "Events", to: { name: "PublicEvents" } },
+  // { text: "Events", to: { name: "PublicEvents" } },
   { text: "Gallery", to: { name: "PublicGallery" } },
 ];
 

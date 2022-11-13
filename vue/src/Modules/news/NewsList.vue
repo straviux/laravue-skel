@@ -119,14 +119,13 @@
           </template>
         </custom-list>
 
-        <!-- <button
-          @click="
-            getForPage({ link: newslist.links[newslist.links.length - 1].url })
-          "
+        <button
+          @click="loadMore()"
           class="btn btn-block rounded"
+          v-if="pageCount <= newslist.data.length"
         >
           Load More
-        </button> -->
+        </button>
       </section>
     </div>
   </main>
@@ -138,7 +137,9 @@ import { computed, ref } from "vue";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import CustomList from "../CustomList.vue";
 const featuredList = computed(() => store.state.articles.featured);
+const newslist = computed(() => store.state.articles.list);
 
+const pageCount = ref(5);
 store.dispatch("articles/getPublicList", {
   article_type_id: 1,
   featured: 1,
@@ -146,23 +147,19 @@ store.dispatch("articles/getPublicList", {
 store.dispatch("articles/getPublicList", {
   article_type_id: 1,
   featured: 0,
-  pageCount: 5,
+  pageCount: pageCount.value,
 });
 
-const newslist = ref(store.state.articles.list);
-
-// const getForPage = ({ link = null }) => {
-//   console.log(link);
-
-//   store.dispatch("articles/getPublicList", {
-//     url: link,
-//     article_type_id: 1,
-//     featured: 0,
-//     pageCount: 5,
-//   });
-//   let newList = JSON.parse(JSON.stringify(store.state.articles.list));
-//   newslist.value = newList;
-// };
+const loadMore = () => {
+  pageCount.value += pageCount.value;
+  console.log(pageCount);
+  store.dispatch("articles/getPublicList", {
+    article_type_id: 1,
+    featured: 0,
+    pageCount: pageCount.value,
+  });
+  // return pageCount;
+};
 </script>
 
 <style scoped>
