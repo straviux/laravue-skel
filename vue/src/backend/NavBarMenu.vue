@@ -75,5 +75,10 @@ const maintenance = [
     icon: "star-outline",
     to: { name: "EventsMaintenance" },
   },
+  {
+    text: "Gallery",
+    icon: "view-gallery-outline",
+    to: { name: "GalleryMaintenance" },
+  },
 ];
 </script>

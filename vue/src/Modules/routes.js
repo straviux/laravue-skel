@@ -59,7 +59,7 @@ const routes = {
         component: Gallery,
         name: "PublicGallery",
         meta: {title:'Gallery'},
-         children: galleryRoutes
+        children: galleryRoutes
       },
 
 

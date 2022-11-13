@@ -3,9 +3,11 @@ const Dashboard = () => import("./components/Dashboard.vue");
 const NewsMaintenance = () => import("./components/NewsMaintenance.vue");
 const StoryMaintenance = () => import("./components/StoryMaintenance.vue");
 const CarouselMaintenance = () => import("./components/CarouselMaintenance.vue");
+const GalleryMaintenance = () => import("./components/GalleryMaintenance.vue")
 import newsRoutes from "./components/news/news-routes";
 import storyRoutes from "./components/stories/story-routes";
 import carouselRoutes from "./components/carousel/routes.js";
+import galleryRoutes from "./components/gallery/routes";
 
 const routes = {
   path: "/admin",
@@ -54,6 +56,13 @@ const routes = {
       component: StoryMaintenance,
       name: "EventsMaintenance",
       // children:storyRoutes
+    }
+    ,{
+      path: "gallery-maintenance",
+      redirect: {name:"GalleryTable"}, //imported from from new-routes
+      component: GalleryMaintenance,
+      name: "GalleryMaintenance",
+      children:galleryRoutes
     }
   ]
 };

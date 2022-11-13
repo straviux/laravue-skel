@@ -2,6 +2,7 @@ import {createStore} from "vuex"
 import axiosClient from "../axios"
 import articlesModule from "./modules/articles/index"
 import carouselModule from "./modules/carousel/index"
+import galleryModude from "./modules/gallery/index"
 const store = createStore(
   {
     state: {
@@ -129,7 +130,8 @@ const store = createStore(
     },
     modules: {
       articles:articlesModule,
-      carousels:carouselModule
+      carousels:carouselModule,
+      gallery: galleryModude
     }
   }
 )
